@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
 namespace Verasium.Core
 {
     //Guarda o resultado da análise da IA
     public class AIAnalysisResult
     {
-        public string aiResponse { get; set; }
-
+        public string? AiResponse { get; set; }
+        public bool IsSuccessful { get; set; }
+        public string? ErrorMessage { get; set; }
     }
 }

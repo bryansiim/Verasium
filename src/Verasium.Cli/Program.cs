@@ -1,4 +1,4 @@
-﻿using Verasium.Core;
+using Verasium.Core;
 
 public class Program
 {
@@ -17,11 +17,33 @@ public class Program
             Console.WriteLine("Cole o texto ou arraste o arquivo e pressione ENTER.");
             string inputContent = Console.ReadLine()?.Trim('"');
 
-            var analyzer = new FileAnalyzer();
-            analyzer.SetInputContent(inputContent);
+            if (string.IsNullOrWhiteSpace(inputContent))
+            {
+                Console.WriteLine("Nenhum conteúdo fornecido.");
+                return;
+            }
 
-            await analyzer.RunAnalysis(); // Roda a análise completa
+            try
+            {
+                var gemini = new GeminiAnalyzer();
+                var analyzer = new FileAnalyzer(inputContent, gemini);
+                var result = await analyzer.RunAnalysis();
 
+                Console.WriteLine("=====Resposta da IA=====");
+
+                if (result.IsSuccessful)
+                {
+                    Console.WriteLine(result.AiResponse);
+                }
+                else
+                {
+                    Console.WriteLine($"Erro: {result.ErrorMessage}");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Erro inesperado: {ex.Message}");
+            }
         }
         else if (option == "0")
         {
