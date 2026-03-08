@@ -28,9 +28,9 @@ namespace Verasium.Core
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                info.MetadataError = "Erro ao ler metadados do arquivo.";
+                info.MetadataError = $"Erro ao ler metadados do arquivo: {ex.Message}";
             }
 
             return info;
