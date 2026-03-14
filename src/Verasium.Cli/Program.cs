@@ -33,7 +33,19 @@ public class Program
 
                 if (result.IsSuccessful)
                 {
-                    Console.WriteLine(result.AiResponse);
+                    Console.WriteLine($"Conclusao: {result.Conclusion}");
+                    Console.WriteLine($"Confianca: {result.ConfidenceScore}%");
+                    Console.WriteLine($"Tipo: {result.ContentType}");
+                    Console.WriteLine($"\nJustificativa: {result.Justification}");
+
+                    if (result.Indicators.Count > 0)
+                    {
+                        Console.WriteLine($"\nIndicadores ({result.Indicators.Count}):");
+                        foreach (var ind in result.Indicators)
+                        {
+                            Console.WriteLine($"  [{ind.Significance}] {ind.Name}: {ind.Finding}");
+                        }
+                    }
                 }
                 else
                 {
