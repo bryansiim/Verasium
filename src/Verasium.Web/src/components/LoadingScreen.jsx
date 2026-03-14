@@ -1,6 +1,4 @@
 import { useState, useEffect } from "react";
-import icon from "../assets/icon.png";
-
 const messages = [
   "Analisando metadados",
   "Verificando padroes de escrita",
@@ -23,13 +21,6 @@ export default function LoadingScreen() {
   return (
     <div className="screen loading-screen">
       <div className="loading-content">
-        <div className="loading-spinner-container">
-          <div className="loading-ring" />
-          <div className="loading-ring" />
-          <div className="loading-ring" />
-          <img src={icon} alt="" className="loading-icon-center" draggable={false} />
-        </div>
-
         <div className="loading-messages">
           <p className="loading-message" key={messageIndex}>
             {messages[messageIndex]}
