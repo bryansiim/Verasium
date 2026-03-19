@@ -131,7 +131,7 @@ export default function InputScreen({ onSubmit, onFileUpload }) {
                   value={content}
                   onChange={(e) => setContent(e.target.value)}
                   onKeyDown={handleKeyDown}
-                  placeholder="Cole aqui o conteúdo que deseja analisar (textos, fotos, PDFs...)"
+                  placeholder="Cole aqui o conteúdo que deseja analisar (textos, fotos, PDFs, vídeos, áudios...)"
                   autoFocus
                 />
               )}
@@ -140,7 +140,7 @@ export default function InputScreen({ onSubmit, onFileUpload }) {
                 <input
                   ref={fileInputRef}
                   type="file"
-                  accept="image/*,.pdf,.txt,.doc,.docx"
+                  accept="image/*,.pdf,.txt,.doc,.docx,.mp4,.mpeg,.mov,.avi,.webm,.mkv,.mp3,.wav,.aac,.ogg,.flac,.m4a"
                   onChange={handleFileChange}
                   hidden
                 />

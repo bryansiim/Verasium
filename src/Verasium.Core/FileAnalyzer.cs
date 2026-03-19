@@ -20,6 +20,28 @@ namespace Verasium.Core
             { ".bmp", "image/bmp" }
         };
 
+        private static readonly Dictionary<string, string> VideoMimeTypes = new(StringComparer.OrdinalIgnoreCase)
+        {
+            { ".mp4", "video/mp4" },
+            { ".mpeg", "video/mpeg" },
+            { ".mov", "video/quicktime" },
+            { ".avi", "video/x-msvideo" },
+            { ".webm", "video/webm" },
+            { ".mkv", "video/x-matroska" }
+        };
+
+        private static readonly Dictionary<string, string> AudioMimeTypes = new(StringComparer.OrdinalIgnoreCase)
+        {
+            { ".mp3", "audio/mpeg" },
+            { ".wav", "audio/wav" },
+            { ".aac", "audio/aac" },
+            { ".ogg", "audio/ogg" },
+            { ".flac", "audio/flac" },
+            { ".m4a", "audio/mp4" }
+        };
+
+        private static readonly HashSet<string> PdfExtensions = new(StringComparer.OrdinalIgnoreCase) { ".pdf" };
+
         public FileAnalyzer(string inputContent, GeminiAnalyzer geminiAnalyzer)
         {
             this.inputContent = inputContent
@@ -43,6 +65,24 @@ namespace Verasium.Core
                     return await AnalyzeImage(mimeType);
                 }
 
+                // Se é um PDF, extrai texto e imagens e analisa
+                if (PdfExtensions.Contains(extension))
+                {
+                    return await AnalyzePdf();
+                }
+
+                // Se é um video, envia diretamente ao Gemini
+                if (VideoMimeTypes.TryGetValue(extension, out string? videoMime))
+                {
+                    return await AnalyzeVideo(videoMime);
+                }
+
+                // Se é um audio, envia diretamente ao Gemini
+                if (AudioMimeTypes.TryGetValue(extension, out string? audioMime))
+                {
+                    return await AnalyzeAudio(audioMime);
+                }
+
                 // Se é um arquivo de texto, lê o conteúdo e faz análise textual
                 string fileContent = await File.ReadAllTextAsync(inputContent);
                 return await geminiAnalyzer.AnalyzeTextAsync(fileContent);
@@ -60,6 +100,28 @@ namespace Verasium.Core
             byte[] imageBytes = await File.ReadAllBytesAsync(inputContent);
 
             return await geminiAnalyzer.AnalyzeImageAsync(categorizedSummary, imageBytes, mimeType);
+        }
+
+        //Analisa um PDF: extrai texto e imagens e envia ao Gemini
+        private async Task<AIAnalysisResult> AnalyzePdf()
+        {
+            var pdfExtractor = new PdfExtractorService();
+            var pdfContent = pdfExtractor.Extract(inputContent);
+            return await geminiAnalyzer.AnalyzePdfAsync(pdfContent);
+        }
+
+        //Analisa um video enviando-o diretamente ao Gemini
+        private async Task<AIAnalysisResult> AnalyzeVideo(string mimeType)
+        {
+            byte[] videoBytes = await File.ReadAllBytesAsync(inputContent);
+            return await geminiAnalyzer.AnalyzeVideoAsync(videoBytes, mimeType);
+        }
+
+        //Analisa um audio enviando-o diretamente ao Gemini
+        private async Task<AIAnalysisResult> AnalyzeAudio(string mimeType)
+        {
+            byte[] audioBytes = await File.ReadAllBytesAsync(inputContent);
+            return await geminiAnalyzer.AnalyzeAudioAsync(audioBytes, mimeType);
         }
 
         //Formata os metadados em categorias relevantes para a análise de IA

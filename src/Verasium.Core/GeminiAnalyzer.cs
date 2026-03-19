@@ -119,6 +119,269 @@ namespace Verasium.Core
             }
         }
 
+        //Analisa o conteudo extraido de um PDF (texto + imagens)
+        public async Task<AIAnalysisResult> AnalyzePdfAsync(PdfContent pdfContent)
+        {
+            try
+            {
+                bool hasText = !string.IsNullOrWhiteSpace(pdfContent.ExtractedText);
+                bool hasImages = pdfContent.Images.Count > 0;
+
+                // Se tem so texto, analisa como texto com prompt de PDF
+                if (hasText && !hasImages)
+                {
+                    return await AnalyzePdfTextAsync(pdfContent.ExtractedText);
+                }
+
+                // Se tem so imagens, analisa cada imagem e agrega
+                if (!hasText && hasImages)
+                {
+                    return await AnalyzePdfImagesAsync(pdfContent.Images);
+                }
+
+                // Se tem ambos, analisa texto e imagens separadamente e agrega
+                if (hasText && hasImages)
+                {
+                    var textTask = AnalyzePdfTextAsync(pdfContent.ExtractedText);
+                    var imageTask = AnalyzePdfImagesAsync(pdfContent.Images);
+                    await Task.WhenAll(textTask, imageTask);
+
+                    var textResult = textTask.Result;
+                    var imageResult = imageTask.Result;
+
+                    return AggregateResults(textResult, imageResult, "pdf");
+                }
+
+                return new AIAnalysisResult
+                {
+                    IsSuccessful = false,
+                    ErrorMessage = "O PDF nao contem texto nem imagens extraiveis."
+                };
+            }
+            catch (Exception ex)
+            {
+                return new AIAnalysisResult
+                {
+                    IsSuccessful = false,
+                    ErrorMessage = $"Erro na analise de PDF: {ex.Message}"
+                };
+            }
+        }
+
+        //Analisa o texto extraido de um PDF
+        private async Task<AIAnalysisResult> AnalyzePdfTextAsync(string text)
+        {
+            try
+            {
+                var config = new GenerateContentConfig
+                {
+                    SystemInstruction = new Content
+                    {
+                        Parts = new List<Part>
+                        {
+                            new Part { Text = Prompts.PdfTextAnalysisSystemPrompt }
+                        }
+                    },
+                    Temperature = 0.2,
+                    MaxOutputTokens = 8192,
+                    ResponseMimeType = "application/json"
+                };
+
+                var response = await client.Models.GenerateContentAsync(
+                    model: "gemini-2.5-flash",
+                    contents: text,
+                    config: config
+                );
+
+                string rawResponse = response?.Candidates?.FirstOrDefault()
+                    ?.Content?.Parts?.FirstOrDefault()?.Text
+                    ?? "";
+
+                return ParseGeminiJsonResponse(rawResponse);
+            }
+            catch (Exception ex)
+            {
+                return new AIAnalysisResult
+                {
+                    IsSuccessful = false,
+                    ErrorMessage = $"Erro na analise de texto do PDF: {ex.Message}"
+                };
+            }
+        }
+
+        //Analisa imagens extraidas de um PDF
+        private async Task<AIAnalysisResult> AnalyzePdfImagesAsync(List<PdfImage> images)
+        {
+            var tasks = images.Select(img =>
+                AnalyzeImageAsync("Imagem extraida de um documento PDF. Sem metadados disponiveis.", img.Bytes, img.MimeType)
+            ).ToList();
+
+            var results = await Task.WhenAll(tasks);
+            var successful = results.Where(r => r.IsSuccessful).ToList();
+
+            if (successful.Count == 0)
+            {
+                return new AIAnalysisResult
+                {
+                    IsSuccessful = false,
+                    ErrorMessage = "Nenhuma imagem do PDF foi analisada com sucesso."
+                };
+            }
+
+            if (successful.Count == 1)
+                return successful[0];
+
+            // Agrega resultados de multiplas imagens
+            var aggregated = successful[0];
+            for (int i = 1; i < successful.Count; i++)
+            {
+                aggregated = AggregateResults(aggregated, successful[i], "pdf");
+            }
+            return aggregated;
+        }
+
+        //Agrega dois resultados de analise em um unico resultado
+        private static AIAnalysisResult AggregateResults(AIAnalysisResult a, AIAnalysisResult b, string contentType)
+        {
+            if (!a.IsSuccessful) return b;
+            if (!b.IsSuccessful) return a;
+
+            int avgScore = (a.ConfidenceScore + b.ConfidenceScore) / 2;
+            string conclusion = avgScore >= 65 ? "AI-Generated"
+                              : avgScore <= 35 ? "Human-Made"
+                              : "Inconclusive";
+
+            var allIndicators = new List<AnalysisIndicator>();
+            allIndicators.AddRange(a.Indicators);
+            allIndicators.AddRange(b.Indicators);
+
+            string justification = $"{a.Justification ?? ""} {b.Justification ?? ""}".Trim();
+
+            return new AIAnalysisResult
+            {
+                IsSuccessful = true,
+                Conclusion = conclusion,
+                ConfidenceScore = avgScore,
+                Justification = justification,
+                ContentType = contentType,
+                Indicators = allIndicators
+            };
+        }
+
+        //Analisa um video enviando-o diretamente ao Gemini
+        public async Task<AIAnalysisResult> AnalyzeVideoAsync(byte[] videoBytes, string mimeType)
+        {
+            try
+            {
+                var config = new GenerateContentConfig
+                {
+                    SystemInstruction = new Content
+                    {
+                        Parts = new List<Part>
+                        {
+                            new Part { Text = Prompts.VideoAnalysisSystemPrompt }
+                        }
+                    },
+                    Temperature = 0.2,
+                    MaxOutputTokens = 8192,
+                    ResponseMimeType = "application/json"
+                };
+
+                var content = new Content
+                {
+                    Parts = new List<Part>
+                    {
+                        new Part { Text = "Analise este video e determine se foi gerado por inteligencia artificial." },
+                        new Part
+                        {
+                            InlineData = new Blob
+                            {
+                                MimeType = mimeType,
+                                Data = videoBytes
+                            }
+                        }
+                    }
+                };
+
+                var response = await client.Models.GenerateContentAsync(
+                    model: "gemini-2.5-flash",
+                    contents: content,
+                    config: config
+                );
+
+                string rawResponse = response?.Candidates?.FirstOrDefault()
+                    ?.Content?.Parts?.FirstOrDefault()?.Text
+                    ?? "";
+
+                return ParseGeminiJsonResponse(rawResponse);
+            }
+            catch (Exception ex)
+            {
+                return new AIAnalysisResult
+                {
+                    IsSuccessful = false,
+                    ErrorMessage = $"Erro na analise de video: {ex.Message}"
+                };
+            }
+        }
+
+        //Analisa um audio enviando-o diretamente ao Gemini
+        public async Task<AIAnalysisResult> AnalyzeAudioAsync(byte[] audioBytes, string mimeType)
+        {
+            try
+            {
+                var config = new GenerateContentConfig
+                {
+                    SystemInstruction = new Content
+                    {
+                        Parts = new List<Part>
+                        {
+                            new Part { Text = Prompts.AudioAnalysisSystemPrompt }
+                        }
+                    },
+                    Temperature = 0.2,
+                    MaxOutputTokens = 8192,
+                    ResponseMimeType = "application/json"
+                };
+
+                var content = new Content
+                {
+                    Parts = new List<Part>
+                    {
+                        new Part { Text = "Analise este audio e determine se foi gerado por inteligencia artificial." },
+                        new Part
+                        {
+                            InlineData = new Blob
+                            {
+                                MimeType = mimeType,
+                                Data = audioBytes
+                            }
+                        }
+                    }
+                };
+
+                var response = await client.Models.GenerateContentAsync(
+                    model: "gemini-2.5-flash",
+                    contents: content,
+                    config: config
+                );
+
+                string rawResponse = response?.Candidates?.FirstOrDefault()
+                    ?.Content?.Parts?.FirstOrDefault()?.Text
+                    ?? "";
+
+                return ParseGeminiJsonResponse(rawResponse);
+            }
+            catch (Exception ex)
+            {
+                return new AIAnalysisResult
+                {
+                    IsSuccessful = false,
+                    ErrorMessage = $"Erro na analise de audio: {ex.Message}"
+                };
+            }
+        }
+
         //Faz o parse do JSON retornado pelo Gemini em AIAnalysisResult
         private static AIAnalysisResult ParseGeminiJsonResponse(string rawResponse)
         {

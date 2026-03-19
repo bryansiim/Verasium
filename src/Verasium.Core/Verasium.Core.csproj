@@ -9,6 +9,7 @@
   <ItemGroup>
     <PackageReference Include="Google.GenAI" Version="0.3.0" />
     <PackageReference Include="MetadataExtractor" Version="2.9.0" />
+    <PackageReference Include="UglyToad.PdfPig" Version="1.7.0-custom-5" />
   </ItemGroup>
 
 </Project>
