@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import InputScreen from "./components/InputScreen";
 import LoadingScreen from "./components/LoadingScreen";
 import ResultScreen from "./components/ResultScreen";
@@ -8,6 +8,16 @@ import "./App.css";
 function App() {
   const [screen, setScreen] = useState("input");
   const [result, setResult] = useState(null);
+  const [darkMode, setDarkMode] = useState(() => {
+    const saved = localStorage.getItem("verasium-theme");
+    if (saved) return saved === "dark";
+    return window.matchMedia("(prefers-color-scheme: dark)").matches;
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", darkMode ? "dark" : "light");
+    localStorage.setItem("verasium-theme", darkMode ? "dark" : "light");
+  }, [darkMode]);
 
   const handleSubmit = async (content) => {
     setScreen("loading");
@@ -49,11 +59,16 @@ function App() {
   return (
     <div className="app">
       {screen === "input" && (
-        <InputScreen onSubmit={handleSubmit} onFileUpload={handleFileUpload} />
+        <InputScreen
+          onSubmit={handleSubmit}
+          onFileUpload={handleFileUpload}
+          darkMode={darkMode}
+          onToggleTheme={() => setDarkMode(!darkMode)}
+        />
       )}
-      {screen === "loading" && <LoadingScreen />}
+      {screen === "loading" && <LoadingScreen darkMode={darkMode} onToggleTheme={() => setDarkMode(!darkMode)} />}
       {screen === "result" && (
-        <ResultScreen result={result} onReset={handleReset} />
+        <ResultScreen result={result} onReset={handleReset} darkMode={darkMode} onToggleTheme={() => setDarkMode(!darkMode)} />
       )}
     </div>
   );

@@ -1,14 +1,17 @@
 import { useState, useEffect } from "react";
+import Navbar from "./Navbar";
+import logo from "../assets/icon.png";
+
 const messages = [
   "Analisando metadados",
   "Verificando padroes de escrita",
-  "Analisando estrutura do texto",
+  "Analisando estrutura do conteudo",
   "Comparando padroes linguisticos",
   "Verificando consistencia semantica",
   "Processando resultados",
 ];
 
-export default function LoadingScreen() {
+export default function LoadingScreen({ darkMode, onToggleTheme }) {
   const [messageIndex, setMessageIndex] = useState(0);
 
   useEffect(() => {
@@ -19,21 +22,24 @@ export default function LoadingScreen() {
   }, []);
 
   return (
-    <div className="screen loading-screen">
-      <div className="loading-content">
-        <div className="loading-messages">
-          <p className="loading-message" key={messageIndex}>
-            {messages[messageIndex]}
-          </p>
-          <div className="loading-dots">
-            <span />
-            <span />
-            <span />
+    <div className="screen-page">
+      <Navbar darkMode={darkMode} onToggleTheme={onToggleTheme} />
+      <div className="screen-centered">
+        <div className="loading-content">
+          <img src={logo} alt="" className="loading-icon" draggable={false} />
+          <div className="loading-messages">
+            <p className="loading-message" key={messageIndex}>
+              {messages[messageIndex]}
+            </p>
+            <div className="loading-dots">
+              <span />
+              <span />
+              <span />
+            </div>
           </div>
-        </div>
-
-        <div className="loading-progress">
-          <div className="loading-progress-bar" />
+          <div className="loading-progress">
+            <div className="loading-progress-bar" />
+          </div>
         </div>
       </div>
     </div>
