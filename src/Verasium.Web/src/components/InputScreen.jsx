@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
-import logo from "../assets/logo.png";
+import logoLight from "../assets/logo.png";
+import logoDark from "../assets/Verasium-Dark.png";
 import Navbar from "./Navbar";
 
 const FORMAT_CARDS = [
@@ -85,7 +86,7 @@ const STEPS = [
   },
 ];
 
-export default function InputScreen({ onSubmit, onFileUpload, darkMode, onToggleTheme }) {
+export default function InputScreen({ onSubmit, onFileUpload, darkMode, onToggleTheme, onNavigateDesignSystem }) {
   const [content, setContent] = useState("");
   const [fileName, setFileName] = useState(null);
   const [dragging, setDragging] = useState(false);
@@ -152,14 +153,14 @@ export default function InputScreen({ onSubmit, onFileUpload, darkMode, onToggle
 
   return (
     <div className="landing">
-      <Navbar darkMode={darkMode} onToggleTheme={onToggleTheme} />
+      <Navbar darkMode={darkMode} onToggleTheme={onToggleTheme} onNavigateDesignSystem={onNavigateDesignSystem} />
 
       {/* ===== HERO ===== */}
       <section className="hero">
         <div className="hero-bg-glow" />
         <div className="hero-content">
           <img
-            src={logo}
+            src={darkMode ? logoDark : logoLight}
             alt="Verasium"
             className="hero-logo"
             draggable={false}
@@ -390,7 +391,7 @@ export default function InputScreen({ onSubmit, onFileUpload, darkMode, onToggle
       <footer className="footer">
         <div className="footer-container">
           <div className="footer-brand">
-            <img src={logo} alt="Verasium" className="footer-logo" draggable={false} />
+            <img src={darkMode ? logoDark : logoLight} alt="Verasium" className="footer-logo" draggable={false} />
             <p className="footer-tagline">Verificacao de autenticidade com IA</p>
           </div>
           <div className="footer-links">

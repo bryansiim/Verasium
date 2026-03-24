@@ -28,11 +28,11 @@ const contentTypeLabels = {
 function getConclusionStyle(conclusion) {
   switch (conclusion) {
     case "AI-Generated":
-      return { bg: "rgba(239, 68, 68, 0.08)", color: "var(--red)", label: "Gerado por IA" };
+      return { bg: "var(--red-tint)", color: "var(--red)", label: "Gerado por IA" };
     case "Human-Made":
-      return { bg: "rgba(16, 185, 129, 0.08)", color: "var(--green)", label: "Produzido por Humano" };
+      return { bg: "var(--green-tint)", color: "var(--green)", label: "Produzido por Humano" };
     default:
-      return { bg: "rgba(245, 158, 11, 0.08)", color: "var(--amber)", label: "Inconclusivo" };
+      return { bg: "var(--amber-tint)", color: "var(--amber)", label: "Inconclusivo" };
   }
 }
 

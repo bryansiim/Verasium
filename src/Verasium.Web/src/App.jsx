@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import InputScreen from "./components/InputScreen";
 import LoadingScreen from "./components/LoadingScreen";
 import ResultScreen from "./components/ResultScreen";
+import DesignSystemScreen from "./components/design-system/DesignSystemScreen";
 import { analyzeContent, analyzeFile } from "./services/api";
 import "./App.css";
 
@@ -64,6 +65,14 @@ function App() {
           onFileUpload={handleFileUpload}
           darkMode={darkMode}
           onToggleTheme={() => setDarkMode(!darkMode)}
+          onNavigateDesignSystem={() => setScreen("design-system")}
+        />
+      )}
+      {screen === "design-system" && (
+        <DesignSystemScreen
+          darkMode={darkMode}
+          onToggleTheme={() => setDarkMode(!darkMode)}
+          onBack={() => setScreen("input")}
         />
       )}
       {screen === "loading" && <LoadingScreen darkMode={darkMode} onToggleTheme={() => setDarkMode(!darkMode)} />}

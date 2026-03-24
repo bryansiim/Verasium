@@ -1,11 +1,12 @@
-import logo from "../assets/icon.png";
+import iconLight from "../assets/icon.png";
+import iconDark from "../assets/icon-dark.png";
 
-export default function Navbar({ darkMode, onToggleTheme }) {
+export default function Navbar({ darkMode, onToggleTheme, onNavigateDesignSystem }) {
   return (
     <nav className="navbar">
       <div className="navbar-inner">
         <a href="#" className="navbar-brand">
-          <img src={logo} alt="Verasium" className="navbar-logo" draggable={false} />
+          <img src={darkMode ? iconDark : iconLight} alt="Verasium" className="navbar-logo" draggable={false} />
           <span className="navbar-name">Verasium</span>
         </a>
 
@@ -14,6 +15,9 @@ export default function Navbar({ darkMode, onToggleTheme }) {
           <a href="#como-funciona" className="navbar-link">Como funciona</a>
           <a href="#formatos" className="navbar-link">Formatos</a>
           <a href="#sobre" className="navbar-link">Sobre</a>
+          {onNavigateDesignSystem && (
+            <a href="#" className="navbar-link" onClick={(e) => { e.preventDefault(); onNavigateDesignSystem(); }}>Design System</a>
+          )}
         </div>
 
         <div className="navbar-actions">
