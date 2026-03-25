@@ -1,6 +1,5 @@
 import { useState, useRef } from "react";
-import logoLight from "../assets/logo.png";
-import logoDark from "../assets/Verasium-Dark.png";
+import logo from "../assets/logo.png";
 import Navbar from "./Navbar";
 
 const FORMAT_CARDS = [
@@ -86,14 +85,12 @@ const STEPS = [
   },
 ];
 
-export default function InputScreen({ onSubmit, onFileUpload, darkMode, onToggleTheme, onNavigateDesignSystem }) {
+export default function InputScreen({ onSubmit, onFileUpload, onNavigateDesignSystem }) {
   const [content, setContent] = useState("");
   const [fileName, setFileName] = useState(null);
   const [dragging, setDragging] = useState(false);
   const fileInputRef = useRef(null);
   const selectedFileRef = useRef(null);
-  const analyzeRef = useRef(null);
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (selectedFileRef.current) {
@@ -145,118 +142,62 @@ export default function InputScreen({ onSubmit, onFileUpload, darkMode, onToggle
     setDragging(false);
   };
 
-  const scrollToAnalyze = () => {
-    analyzeRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
   const hasContent = content.trim() || fileName;
 
   return (
     <div className="landing">
-      <Navbar darkMode={darkMode} onToggleTheme={onToggleTheme} onNavigateDesignSystem={onNavigateDesignSystem} />
+      <Navbar onNavigateDesignSystem={onNavigateDesignSystem} />
 
       {/* ===== HERO ===== */}
-      <section className="hero">
+      <section className="hero" id="analisar">
         <div className="hero-bg-glow" />
-        <div className="hero-content">
+        <div className="hero-logo-wrapper">
           <img
-            src={darkMode ? logoDark : logoLight}
+            src={logo}
             alt="Verasium"
             className="hero-logo"
             draggable={false}
             onDragStart={(e) => e.preventDefault()}
           />
-          <h1 className="hero-title">
-            Descubra se o conteudo e<br />
-            <span className="hero-highlight">real ou gerado por IA</span>
-          </h1>
-          <p className="hero-subtitle">
-            Analise textos, imagens, PDFs, videos e audios com inteligencia artificial avancada.
-            Resultados detalhados com indicadores de confianca em segundos.
-          </p>
-          <div className="hero-actions">
-            <button className="hero-cta" onClick={scrollToAnalyze}>
-              Analisar agora
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <path d="M5 12h14" />
-                <path d="m12 5 7 7-7 7" />
-              </svg>
-            </button>
-            <a href="#como-funciona" className="hero-secondary">
-              Como funciona?
-            </a>
-          </div>
-          <div className="hero-stats">
-            <div className="hero-stat">
-              <span className="hero-stat-number">5+</span>
-              <span className="hero-stat-label">Formatos suportados</span>
-            </div>
-            <div className="hero-stat-divider" />
-            <div className="hero-stat">
-              <span className="hero-stat-number">10+</span>
-              <span className="hero-stat-label">Indicadores analisados</span>
-            </div>
-            <div className="hero-stat-divider" />
-            <div className="hero-stat">
-              <span className="hero-stat-number">~30s</span>
-              <span className="hero-stat-label">Tempo medio</span>
-            </div>
-          </div>
         </div>
-        <div className="hero-scroll-hint" onClick={scrollToAnalyze}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M12 5v14" />
-            <path d="m19 12-7 7-7-7" />
-          </svg>
-        </div>
-      </section>
-
-      {/* ===== ANALYZE ===== */}
-      <section className="section analyze-section" ref={analyzeRef} id="analisar">
-        <div className="section-container">
-          <div className="section-header">
-            <span className="section-tag">Analise</span>
-            <h2 className="section-title">Teste agora</h2>
-            <p className="section-desc">Cole um texto ou envie um arquivo para analise instantanea.</p>
+        <div className="hero-grid">
+          <div className="hero-content">
+            <h1 className="hero-title">
+              Descubra se o conteudo e<br />
+              <span className="hero-highlight">real ou gerado por IA</span>
+            </h1>
+            <p className="hero-subtitle">
+              Analise textos, imagens, PDFs, videos e audios com inteligencia artificial avancada.
+              Resultados detalhados com indicadores de confianca em segundos.
+            </p>
+            <div className="hero-stats">
+              <div className="hero-stat">
+                <span className="hero-stat-number">5+</span>
+                <span className="hero-stat-label">Formatos suportados</span>
+              </div>
+              <div className="hero-stat-divider" />
+              <div className="hero-stat">
+                <span className="hero-stat-number">10+</span>
+                <span className="hero-stat-label">Indicadores analisados</span>
+              </div>
+              <div className="hero-stat-divider" />
+              <div className="hero-stat">
+                <span className="hero-stat-number">~30s</span>
+                <span className="hero-stat-label">Tempo medio</span>
+              </div>
+            </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="input-form">
-            <div className="input-card">
-              <div className="input-card-glow" />
+          <div className="hero-input">
+            <form onSubmit={handleSubmit} className="input-form">
               <div
-                className={`input-card-inner${dragging ? " dragging" : ""}`}
+                className={`input-card${dragging ? " dragging" : ""}`}
                 onDrop={handleDrop}
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
               >
-                <div className="input-card-header">
-                  <span className="input-card-label">Conteudo para analise</span>
-                </div>
-
-                {fileName ? (
-                  <div className="file-preview">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                      <polyline points="14 2 14 8 20 8" />
-                    </svg>
-                    <span className="file-name">{fileName}</span>
-                    <button type="button" className="file-remove" onClick={clearFile}>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M18 6 6 18" />
-                        <path d="m6 6 12 12" />
-                      </svg>
-                    </button>
-                  </div>
-                ) : (
-                  <textarea
-                    value={content}
-                    onChange={(e) => setContent(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                    placeholder="Cole aqui o conteudo que deseja analisar (textos, fotos, PDFs, videos, audios...)"
-                  />
-                )}
-
-                <div className="input-card-footer">
+                <div className="input-card-top">
+                  <span className="input-card-label">Cole seu texto ou</span>
                   <input
                     ref={fileInputRef}
                     type="file"
@@ -279,6 +220,37 @@ export default function InputScreen({ onSubmit, onFileUpload, darkMode, onToggle
                     </svg>
                     Enviar arquivo
                   </button>
+                </div>
+
+                {fileName ? (
+                  <div className="file-preview">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                      <polyline points="14 2 14 8 20 8" />
+                    </svg>
+                    <span className="file-name">{fileName}</span>
+                    <button type="button" className="file-remove" onClick={clearFile}>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M18 6 6 18" />
+                        <path d="m6 6 12 12" />
+                      </svg>
+                    </button>
+                  </div>
+                ) : (
+                  <textarea
+                    value={content}
+                    onChange={(e) => {
+                      if (e.target.value.length <= 10000) setContent(e.target.value);
+                    }}
+                    onKeyDown={handleKeyDown}
+                    placeholder="Cole aqui o conteudo que deseja analisar..."
+                  />
+                )}
+
+                <div className="input-card-footer">
+                  <span className="input-char-count">
+                    {content.length.toLocaleString("pt-BR")}/10.000 caracteres
+                  </span>
                   <button type="submit" className="submit-btn" disabled={!hasContent}>
                     <span>Analisar</span>
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -288,8 +260,8 @@ export default function InputScreen({ onSubmit, onFileUpload, darkMode, onToggle
                   </button>
                 </div>
               </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
       </section>
 
@@ -391,7 +363,7 @@ export default function InputScreen({ onSubmit, onFileUpload, darkMode, onToggle
       <footer className="footer">
         <div className="footer-container">
           <div className="footer-brand">
-            <img src={darkMode ? logoDark : logoLight} alt="Verasium" className="footer-logo" draggable={false} />
+            <img src={logo} alt="Verasium" className="footer-logo" draggable={false} />
             <p className="footer-tagline">Verificacao de autenticidade com IA</p>
           </div>
           <div className="footer-links">

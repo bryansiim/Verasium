@@ -42,14 +42,14 @@ function getScoreColor(score) {
   return "var(--red)";
 }
 
-export default function ResultScreen({ result, onReset, darkMode, onToggleTheme }) {
+export default function ResultScreen({ result, onReset }) {
   const [showIndicators, setShowIndicators] = useState(false);
   const isSuccess = result.isSuccessful;
 
   if (!isSuccess) {
     return (
       <div className="screen-page">
-        <Navbar darkMode={darkMode} onToggleTheme={onToggleTheme} />
+        <Navbar />
         <div className="screen-centered">
           <div className="result-content">
             <div className="result-card error">
@@ -76,7 +76,7 @@ export default function ResultScreen({ result, onReset, darkMode, onToggleTheme 
 
   return (
     <div className="screen-page">
-      <Navbar darkMode={darkMode} onToggleTheme={onToggleTheme} />
+      <Navbar />
       <div className="screen-centered">
         <div className="result-content">
           <div className="result-card success">

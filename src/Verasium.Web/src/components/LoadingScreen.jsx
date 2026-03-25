@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import Navbar from "./Navbar";
-import iconLight from "../assets/icon.png";
-import iconDark from "../assets/icon-dark.png";
+import icon from "../assets/icon.png";
 
 const messages = [
   "Analisando metadados",
@@ -12,7 +11,7 @@ const messages = [
   "Processando resultados",
 ];
 
-export default function LoadingScreen({ darkMode, onToggleTheme }) {
+export default function LoadingScreen() {
   const [messageIndex, setMessageIndex] = useState(0);
 
   useEffect(() => {
@@ -24,10 +23,10 @@ export default function LoadingScreen({ darkMode, onToggleTheme }) {
 
   return (
     <div className="screen-page">
-      <Navbar darkMode={darkMode} onToggleTheme={onToggleTheme} />
+      <Navbar />
       <div className="screen-centered">
         <div className="loading-content">
-          <img src={darkMode ? iconDark : iconLight} alt="" className="loading-icon" draggable={false} />
+          <img src={icon} alt="" className="loading-icon" draggable={false} />
           <div className="loading-messages">
             <p className="loading-message" key={messageIndex}>
               {messages[messageIndex]}
