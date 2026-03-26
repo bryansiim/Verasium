@@ -2,7 +2,6 @@ import { useState } from "react";
 import InputScreen from "./components/InputScreen";
 import LoadingScreen from "./components/LoadingScreen";
 import ResultScreen from "./components/ResultScreen";
-import DesignSystemScreen from "./components/design-system/DesignSystemScreen";
 import { analyzeContent, analyzeFile } from "./services/api";
 import "./App.css";
 
@@ -53,15 +52,9 @@ function App() {
         <InputScreen
           onSubmit={handleSubmit}
           onFileUpload={handleFileUpload}
-          onNavigateDesignSystem={() => setScreen("design-system")}
         />
       )}
-      {screen === "design-system" && (
-        <DesignSystemScreen
-          onBack={() => setScreen("input")}
-        />
-      )}
-      {screen === "loading" && <LoadingScreen />}
+{screen === "loading" && <LoadingScreen />}
       {screen === "result" && (
         <ResultScreen result={result} onReset={handleReset} />
       )}

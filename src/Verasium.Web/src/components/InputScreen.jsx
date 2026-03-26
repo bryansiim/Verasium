@@ -85,7 +85,7 @@ const STEPS = [
   },
 ];
 
-export default function InputScreen({ onSubmit, onFileUpload, onNavigateDesignSystem }) {
+export default function InputScreen({ onSubmit, onFileUpload }) {
   const [content, setContent] = useState("");
   const [fileName, setFileName] = useState(null);
   const [dragging, setDragging] = useState(false);
@@ -146,7 +146,7 @@ export default function InputScreen({ onSubmit, onFileUpload, onNavigateDesignSy
 
   return (
     <div className="landing">
-      <Navbar onNavigateDesignSystem={onNavigateDesignSystem} />
+      <Navbar />
 
       {/* ===== HERO ===== */}
       <section className="hero" id="analisar">
@@ -196,56 +196,70 @@ export default function InputScreen({ onSubmit, onFileUpload, onNavigateDesignSy
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
               >
-                <div className="input-card-top">
-                  <span className="input-card-label">Cole seu texto ou</span>
-                  <input
-                    ref={fileInputRef}
-                    type="file"
-                    accept="image/*,.pdf,.txt,.doc,.docx,.mp4,.mpeg,.mov,.avi,.webm,.mkv,.mp3,.wav,.aac,.ogg,.flac,.m4a"
-                    onChange={handleFileChange}
-                    hidden
-                  />
-                  <button
-                    type="button"
-                    className="upload-link"
-                    onClick={() => {
-                      clearFile();
-                      fileInputRef.current.click();
-                    }}
-                  >
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                      <polyline points="17 8 12 3 7 8" />
-                      <line x1="12" y1="3" x2="12" y2="15" />
-                    </svg>
-                    Enviar arquivo
-                  </button>
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*,.pdf,.txt,.doc,.docx,.mp4,.mpeg,.mov,.avi,.webm,.mkv,.mp3,.wav,.aac,.ogg,.flac,.m4a"
+                  onChange={handleFileChange}
+                  hidden
+                />
+
+                <div className="input-area">
+                  {fileName ? (
+                    <div className="file-preview">
+                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                        <polyline points="14 2 14 8 20 8" />
+                      </svg>
+                      <span className="file-name">{fileName}</span>
+                      <button type="button" className="file-remove" onClick={clearFile}>
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M18 6 6 18" />
+                          <path d="m6 6 12 12" />
+                        </svg>
+                      </button>
+                    </div>
+                  ) : (
+                    <>
+                      {!content && (
+                        <div className="input-placeholder">
+                          <span>Insira seu conteudo ou</span>
+                          <button
+                            type="button"
+                            className="upload-link"
+                            onClick={() => {
+                              clearFile();
+                              fileInputRef.current.click();
+                            }}
+                          >
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                              <polyline points="17 8 12 3 7 8" />
+                              <line x1="12" y1="3" x2="12" y2="15" />
+                            </svg>
+                            Enviar arquivos
+                          </button>
+                        </div>
+                      )}
+                      <textarea
+                        value={content}
+                        onChange={(e) => {
+                          if (e.target.value.length <= 10000) setContent(e.target.value);
+                        }}
+                        onKeyDown={handleKeyDown}
+                      />
+                    </>
+                  )}
                 </div>
 
-                {fileName ? (
-                  <div className="file-preview">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                      <polyline points="14 2 14 8 20 8" />
-                    </svg>
-                    <span className="file-name">{fileName}</span>
-                    <button type="button" className="file-remove" onClick={clearFile}>
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M18 6 6 18" />
-                        <path d="m6 6 12 12" />
-                      </svg>
-                    </button>
-                  </div>
-                ) : (
-                  <textarea
-                    value={content}
-                    onChange={(e) => {
-                      if (e.target.value.length <= 10000) setContent(e.target.value);
-                    }}
-                    onKeyDown={handleKeyDown}
-                    placeholder="Cole aqui o conteudo que deseja analisar..."
-                  />
-                )}
+                <div className="supported-formats">
+                  <span className="formats-label">Formatos suportados:</span>
+                  <span className="format-tag">Texto</span>
+                  <span className="format-tag">Imagem</span>
+                  <span className="format-tag">Audio</span>
+                  <span className="format-tag">Video</span>
+                  <span className="format-tag">PDF</span>
+                </div>
 
                 <div className="input-card-footer">
                   <span className="input-char-count">
@@ -364,13 +378,6 @@ export default function InputScreen({ onSubmit, onFileUpload, onNavigateDesignSy
         <div className="footer-container">
           <div className="footer-brand">
             <img src={logo} alt="Verasium" className="footer-logo" draggable={false} />
-            <p className="footer-tagline">Verificacao de autenticidade com IA</p>
-          </div>
-          <div className="footer-links">
-            <a href="#analisar" className="footer-link">Analisar</a>
-            <a href="#como-funciona" className="footer-link">Como funciona</a>
-            <a href="#formatos" className="footer-link">Formatos</a>
-            <a href="#sobre" className="footer-link">Sobre</a>
           </div>
           <div className="footer-bottom">
             <p>&copy; {new Date().getFullYear()} Verasium. Projeto open-source.</p>

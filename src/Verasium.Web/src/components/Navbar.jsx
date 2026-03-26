@@ -1,4 +1,4 @@
-export default function Navbar({ onNavigateDesignSystem }) {
+export default function Navbar() {
   return (
     <nav className="navbar">
       <div className="navbar-inner">
@@ -7,9 +7,6 @@ export default function Navbar({ onNavigateDesignSystem }) {
           <a href="#como-funciona" className="navbar-link">Como funciona</a>
           <a href="#formatos" className="navbar-link">Formatos</a>
           <a href="#sobre" className="navbar-link">Sobre</a>
-          {onNavigateDesignSystem && (
-            <a href="#" className="navbar-link" onClick={(e) => { e.preventDefault(); onNavigateDesignSystem(); }}>Design System</a>
-          )}
         </div>
       </div>
     </nav>
