@@ -507,7 +507,7 @@ body {
   z-index: 1;
   text-align: center;
   width: 100%;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
   margin-top: -48px;
   animation: heroFadeIn 0.7s cubic-bezier(0, 0, 0.2, 1);
 }
@@ -1208,130 +1208,172 @@ body {
 }
 
 /* ===== LOADING ===== */
-.loading-content {
+.loading-wrap {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 32px;
+  gap: 24px;
 }
 
-.loading-icon {
-  width: 48px;
-  height: 48px;
-  opacity: 0.6;
-  animation: loadingPulse 800ms ease-in-out infinite;
+/* Logo */
+.loading-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  font-weight: 500;
+  color: #1a1a2e;
+  letter-spacing: -0.02em;
+  opacity: 0;
+  animation: loadingFadeIn 0.6s ease forwards 0.1s;
 }
 
-@keyframes loadingPulse {
-  0%,
-  100% {
-    opacity: 0.4;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 0.8;
-    transform: scale(1.05);
-  }
+/* Scan card */
+.scan-card {
+  width: 300px;
+  background: rgba(255, 255, 255, 0.52);
+  border: 1px solid rgba(140, 120, 220, 0.2);
+  border-radius: 18px;
+  position: relative;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 20px 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  justify-content: center;
+  opacity: 0;
+  animation: loadingFadeIn 0.6s ease forwards 0.25s;
 }
 
-.loading-messages {
+/* Mock text rows */
+.txt-row {
+  height: 7px;
+  border-radius: 4px;
+  background: rgba(100, 90, 200, 0.09);
+}
+
+/* Animated magnifier */
+.magnifier {
+  position: absolute;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  border: 2px solid rgba(74, 95, 212, 0.55);
+  box-shadow:
+    0 0 0 1px rgba(74, 95, 212, 0.12),
+    inset 0 0 18px rgba(74, 95, 212, 0.07);
+  animation: moveMagnifier 3.2s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* Magnifier handle */
+.magnifier::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  right: -5px;
+  width: 2.5px;
+  height: 17px;
+  background: rgba(74, 95, 212, 0.5);
+  border-radius: 2px;
+  transform: rotate(45deg);
+  transform-origin: top center;
+}
+
+/* Magnifier inner glow */
+.magnifier::before {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, rgba(74, 95, 212, 0.08), transparent 70%);
+}
+
+@keyframes moveMagnifier {
+  0%   { left: 18px;  top: 16px; }
+  30%  { left: 140px; top: 10px; }
+  60%  { left: 190px; top: 38px; }
+  80%  { left: 80px;  top: 46px; }
+  100% { left: 18px;  top: 16px; }
+}
+
+/* Label area */
+.label-area {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  min-height: 52px;
+  opacity: 0;
+  animation: loadingFadeIn 0.6s ease forwards 0.4s;
 }
 
-.loading-message {
-  font-size: var(--text-lg);
-  color: var(--text-secondary);
-  letter-spacing: 0.02em;
-  animation: messageFadeIn 0.4s cubic-bezier(0, 0, 0.2, 1);
+.loading-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1a1a2e;
+  letter-spacing: -0.01em;
 }
 
-@keyframes messageFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.loading-dots {
-  display: flex;
-  gap: 6px;
-  margin-top: 4px;
-}
-
-.loading-dots span {
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--primary-500);
-  animation: dotPulse 1.4s ease-in-out infinite;
-}
-
-.loading-dots span:nth-child(2) {
-  animation-delay: 0.2s;
-}
-.loading-dots span:nth-child(3) {
-  animation-delay: 0.4s;
-}
-
-@keyframes dotPulse {
-  0%,
-  80%,
-  100% {
-    opacity: 0.15;
-    transform: scale(0.8);
-  }
-  40% {
-    opacity: 1;
-    transform: scale(1.2);
-  }
-}
-
-.loading-progress {
+/* Cycling subtitle text */
+.loading-sub {
+  font-size: 12px;
+  color: rgba(50, 40, 120, 0.45);
+  height: 16px;
   width: 200px;
-  height: 3px;
-  background: var(--gray-200);
-  border-radius: 4px;
+  position: relative;
   overflow: hidden;
 }
 
-/* Phase 6C: loading bar with accent color for brand identity */
-.loading-progress-bar {
-  height: 100%;
-  border-radius: 4px;
-  background: linear-gradient(
-    90deg,
-    var(--primary-500),
-    var(--accent-400),
-    var(--primary-400)
-  );
-  background-size: 200% 100%;
-  animation: progressIndeterminate 2s ease-in-out infinite;
+.sub-item {
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  animation: cycleText 6s ease-in-out infinite;
+  opacity: 0;
 }
 
-@keyframes progressIndeterminate {
-  0% {
-    width: 0%;
-    margin-left: 0%;
-    background-position: 100% 0;
-  }
-  50% {
-    width: 60%;
-    margin-left: 20%;
-    background-position: 0% 0;
-  }
-  100% {
-    width: 0%;
-    margin-left: 100%;
-    background-position: 100% 0;
-  }
+.sub-item:nth-child(1) { animation-delay: 0s; }
+.sub-item:nth-child(2) { animation-delay: 2s; }
+.sub-item:nth-child(3) { animation-delay: 4s; }
+
+@keyframes cycleText {
+  0%   { opacity: 0; transform: translateY(6px); }
+  8%   { opacity: 1; transform: translateY(0); }
+  30%  { opacity: 1; transform: translateY(0); }
+  38%  { opacity: 0; transform: translateY(-6px); }
+  100% { opacity: 0; }
+}
+
+/* Bouncing colored dots */
+.bouncing-dots {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+}
+
+.bouncing-dots span {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  animation: bounceDot 1.3s ease-in-out infinite;
+}
+
+.bouncing-dots span:nth-child(1) { background: #4A5FD4; animation-delay: 0s; }
+.bouncing-dots span:nth-child(2) { background: #8B6FD4; animation-delay: 0.18s; }
+.bouncing-dots span:nth-child(3) { background: #C084D4; animation-delay: 0.36s; }
+
+@keyframes bounceDot {
+  0%, 100% { opacity: 0.3; transform: translateY(0); }
+  50%      { opacity: 1;   transform: translateY(-5px); }
+}
+
+@keyframes loadingFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
 
 /* ========================================================

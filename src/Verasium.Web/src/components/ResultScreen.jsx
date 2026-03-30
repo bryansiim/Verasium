@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Navbar from "./Navbar";
 
 const significanceLabels = {
   strong_ai: "Forte sinal de IA",
@@ -49,7 +48,6 @@ export default function ResultScreen({ result, onReset }) {
   if (!isSuccess) {
     return (
       <div className="screen-page">
-        <Navbar />
         <div className="screen-centered">
           <div className="result-content">
             <div className="result-card error">
