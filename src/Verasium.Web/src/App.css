@@ -325,17 +325,12 @@ body {
   overflow-x: hidden;
   background: linear-gradient(
     to bottom,
-    #f8d8ea 0%,
-    #f2d2ec 8%,
-    #edd0ef 16%,
-    #e6d0f2 24%,
-    #dfd2f4 32%,
-    #dad6f5 42%,
-    #d6daf6 52%,
-    #d4def7 62%,
-    #d2e0f6 72%,
-    #d0ddf4 82%,
-    #cedaf2 100%
+    #F4F2FF 0%,
+    #EEEAFF 20%,
+    #E8E4FF 40%,
+    #E2E0FF 60%,
+    #DCE4FF 80%,
+    #D6E8FF 100%
   );
 }
 
@@ -348,8 +343,10 @@ body {
   align-items: center;
   justify-content: center;
   padding: 80px 24px 80px;
-  overflow: visible;
+  overflow: hidden;
   background: transparent;
+  -webkit-mask-image: linear-gradient(to bottom, black 75%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 75%, transparent 100%);
 }
 
 /* --- Organic gradient blobs (light mode, vivid) --- */
@@ -397,7 +394,7 @@ body {
   left: 10%;
   width: 80%;
   height: 70%;
-  background: radial-gradient(ellipse at 50% 60%, rgba(255, 50, 140, 0.3), rgba(240, 30, 120, 0.1) 50%, transparent 70%);
+  background: radial-gradient(ellipse at 50% 60%, rgba(255, 50, 140, 0.12), rgba(240, 30, 120, 0.04) 50%, transparent 70%);
   filter: blur(90px);
   will-change: transform;
   animation: blobDrift3 25s ease-in-out infinite;
@@ -1129,13 +1126,12 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  background:
-    radial-gradient(
-      ellipse at 50% -10%,
-      color-mix(in srgb, var(--primary-500) 5%, transparent) 0%,
-      transparent 60%
-    ),
-    var(--bg);
+  background: linear-gradient(
+    to bottom,
+    #EDD8F5 0%,
+    #E2DCFF 40%,
+    #D6E8FF 100%
+  );
 }
 
 .screen-centered {

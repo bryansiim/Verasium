@@ -17,10 +17,10 @@ function App() {
       setResult(data);
       setScreen("result");
     } catch (err) {
-      setResult({
-        isSuccessful: false,
-        errorMessage: err.message,
-      });
+      const msg = err.message === "Failed to fetch"
+        ? "Nao foi possivel conectar ao servidor. Verifique sua conexao."
+        : err.message;
+      setResult({ isSuccessful: false, errorMessage: msg });
       setScreen("result");
     }
   };
@@ -33,10 +33,10 @@ function App() {
       setResult(data);
       setScreen("result");
     } catch (err) {
-      setResult({
-        isSuccessful: false,
-        errorMessage: err.message,
-      });
+      const msg = err.message === "Failed to fetch"
+        ? "Nao foi possivel conectar ao servidor. Verifique sua conexao."
+        : err.message;
+      setResult({ isSuccessful: false, errorMessage: msg });
       setScreen("result");
     }
   };
