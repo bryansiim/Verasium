@@ -74,7 +74,6 @@ export default function ResultScreen({ result, onReset }) {
 
   return (
     <div className="screen-page">
-      <Navbar />
       <div className="screen-centered">
         <div className="result-content">
           <div className="result-card success">
