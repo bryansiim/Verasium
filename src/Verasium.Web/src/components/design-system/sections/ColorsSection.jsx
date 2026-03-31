@@ -29,20 +29,20 @@ export default function ColorsSection() {
     { name: "Primary 50", hex: "#ECEEFF", desc: "tints, fundos de badge" },
     { name: "Primary 100", hex: "#C7CBFF", desc: "focus rings, estados passivos" },
     { name: "Primary 200", hex: "#9EA5F9", desc: "accent dark mode, bordas" },
-    { name: "Primary 400", hex: "#6B72F0", desc: "icones ativos, links" },
-    { name: "Primary 500", hex: "#4B50D6", desc: "COR PRINCIPAL — botoes, foco" },
-    { name: "Primary 700", hex: "#3530A8", desc: "hover botao primario" },
+    { name: "Primary 400", hex: "#6B72F0", desc: "ícones ativos, links" },
+    { name: "Primary 500", hex: "#4B50D6", desc: "COR PRINCIPAL: botões, foco" },
+    { name: "Primary 700", hex: "#3530A8", desc: "hover botão primário" },
     { name: "Primary 900", hex: "#1E1A6E", desc: "texto forte light mode" },
   ];
 
   const neutrals = [
-    { name: "Neutral 50", hex: "#F5F5FA", desc: "fundo pagina (light)" },
-    { name: "Neutral 100", hex: "#E4E4EE", desc: "cards secundarios, bordas" },
+    { name: "Neutral 50", hex: "#F5F5FA", desc: "fundo página (light)" },
+    { name: "Neutral 100", hex: "#E4E4EE", desc: "cards secundários, bordas" },
     { name: "Neutral 200", hex: "#C0C0D4", desc: "bordas, separadores" },
-    { name: "Neutral 400", hex: "#8080A0", desc: "placeholder, icones inativos" },
-    { name: "Neutral 600", hex: "#4A4A6A", desc: "texto secundario (light)" },
+    { name: "Neutral 400", hex: "#8080A0", desc: "placeholder, ícones inativos" },
+    { name: "Neutral 600", hex: "#4A4A6A", desc: "texto secundário (light)" },
     { name: "Neutral 900", hex: "#1C1C2E", desc: "fundo cards (dark)" },
-    { name: "Neutral 950", hex: "#0E0E1A", desc: "fundo pagina (dark)" },
+    { name: "Neutral 950", hex: "#0E0E1A", desc: "fundo página (dark)" },
   ];
 
   const semantic = [
@@ -78,22 +78,22 @@ export default function ColorsSection() {
     <section className="ds-section" id="ds-colors">
       <h2 className="ds-section-title">03. Paleta de Cores</h2>
       <p className="ds-section-desc">
-        A identidade cromatica e exclusivamente azul-indigo/roxo (ramp Primary).
-        Todas as demais cores servem funcao — nunca decoracao.
+        A identidade cromática é exclusivamente azul-indigo/roxo (ramp Primary).
+        Todas as demais cores servem função, nunca decoração.
       </p>
 
-      <SwatchGroup title="Primary — Identidade da Marca" swatches={primary} />
-      <SwatchGroup title="Neutros — Escala Fria (matiz azul-roxo)" swatches={neutrals} />
-      <SwatchGroup title="Semanticas — Feedback de Sistema" swatches={semantic} />
-      <SwatchGroup title="Dark Mode — Tokens" swatches={darkTokens} />
+      <SwatchGroup title="Primary: Identidade da Marca" swatches={primary} />
+      <SwatchGroup title="Neutros: Escala Fria (matiz azul-roxo)" swatches={neutrals} />
+      <SwatchGroup title="Semânticas: Feedback de Sistema" swatches={semantic} />
+      <SwatchGroup title="Dark Mode: Tokens" swatches={darkTokens} />
 
       <div className="ds-subsection">
         <h3 className="ds-subsection-title">Regras</h3>
         <ul className="ds-rules-list">
-          <li>Semanticas usadas SOMENTE para estados funcionais (validacoes, alertas, status)</li>
-          <li>Nunca usar cores semanticas como decoracao ou identidade visual</li>
-          <li>Dark mode e variacao da mesma identidade — nao introduzir novas cores</li>
-          <li>Neutros tem leve matiz azul-roxo — nao usar cinzas quentes ou puros</li>
+          <li>Semânticas usadas SOMENTE para estados funcionais (validações, alertas, status)</li>
+          <li>Nunca usar cores semânticas como decoração ou identidade visual</li>
+          <li>Dark mode é variação da mesma identidade, não introduzir novas cores</li>
+          <li>Neutros têm leve matiz azul-roxo, não usar cinzas quentes ou puros</li>
         </ul>
       </div>
     </section>

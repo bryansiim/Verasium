@@ -18,7 +18,7 @@ function App() {
       setScreen("result");
     } catch (err) {
       const msg = err.message === "Failed to fetch"
-        ? "Nao foi possivel conectar ao servidor. Verifique sua conexao."
+        ? "Não foi possível conectar ao servidor. Verifique sua conexão."
         : err.message;
       setResult({ isSuccessful: false, errorMessage: msg });
       setScreen("result");
@@ -34,7 +34,7 @@ function App() {
       setScreen("result");
     } catch (err) {
       const msg = err.message === "Failed to fetch"
-        ? "Nao foi possivel conectar ao servidor. Verifique sua conexao."
+        ? "Não foi possível conectar ao servidor. Verifique sua conexão."
         : err.message;
       setResult({ isSuccessful: false, errorMessage: msg });
       setScreen("result");

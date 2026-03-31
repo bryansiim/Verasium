@@ -1484,37 +1484,92 @@ body {
 /* Phase 8: dark mode text glow on conclusion */
 
 .confidence-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   margin-bottom: 20px;
 }
 
-.confidence-label {
+/* Spectrum scores */
+.spectrum-scores {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.score-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.score-block.right {
+  align-items: flex-end;
+}
+
+.score-pct {
+  font-size: 1.75rem;
+  font-weight: 700;
+  font-family: var(--font-brand);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  transition: color 0.3s ease;
+}
+
+.score-pct.human { color: #1D9E75; }
+.score-pct.ai { color: #E24B4A; }
+.score-pct.neutral { color: var(--text-tertiary); }
+
+.score-name {
+  font-size: 0.7rem;
+  color: var(--text-tertiary);
+  margin-top: 4px;
+  letter-spacing: 0.03em;
+}
+
+/* Spectrum track */
+.spectrum-track {
+  position: relative;
+  height: 10px;
+  border-radius: 5px;
+  background: linear-gradient(90deg,
+    #1D9E75 0%,
+    #9FE1CB 38%,
+    #e8e8e8 50%,
+    #F7C1C1 62%,
+    #E24B4A 100%
+  );
+}
+
+/* Needle */
+.spectrum-needle {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.18);
+  transition: left 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
+              border-color 0.4s ease;
+}
+
+/* Spectrum foot labels */
+.spectrum-foot {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 0.85rem;
-  font-weight: 500;
-  color: var(--text-secondary);
-  margin-bottom: 8px;
 }
 
-/* Phase 4A: MuseoModerno on confidence percentage */
-.confidence-label span:last-child {
-  font-family: var(--font-brand);
+.spectrum-foot span {
+  font-size: 0.6rem;
+  color: var(--text-tertiary);
+  opacity: 0.6;
 }
 
-/* Phase 5D: taller confidence meter */
-.confidence-meter {
-  width: 100%;
-  height: 12px;
-  background: var(--gray-100);
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.confidence-fill {
-  height: 100%;
-  border-radius: 12px;
-  transition: width 0.8s cubic-bezier(0, 0, 0.2, 1);
+.spectrum-foot .mid {
+  font-size: 0.6rem;
+  color: var(--text-tertiary);
 }
 
 /* Phase 7A: gradient left border on justification */

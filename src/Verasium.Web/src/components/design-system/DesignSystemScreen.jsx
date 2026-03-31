@@ -15,12 +15,12 @@ const NAV_ITEMS = [
   { id: "ds-brand", label: "Marca" },
   { id: "ds-typography", label: "Tipografia" },
   { id: "ds-colors", label: "Cores" },
-  { id: "ds-spacing", label: "Espacamento" },
+  { id: "ds-spacing", label: "Espaçamento" },
   { id: "ds-components", label: "Componentes" },
   { id: "ds-layouts", label: "Layouts" },
   { id: "ds-motion", label: "Motion" },
   { id: "ds-accessibility", label: "Acessibilidade" },
-  { id: "ds-donts", label: "Nao fazer" },
+  { id: "ds-donts", label: "Não fazer" },
 ];
 
 export default function DesignSystemScreen({ onBack }) {
@@ -96,8 +96,8 @@ export default function DesignSystemScreen({ onBack }) {
           <div className="ds-hero">
             <h1 className="ds-hero-title">Verasium Design System</h1>
             <p className="ds-hero-desc">
-              Fonte unica de verdade visual do produto. Todas as definicoes de marca, tipografia,
-              cores, componentes e padroes de interface do Verasium.
+              Fonte única de verdade visual do produto. Todas as definições de marca, tipografia,
+              cores, componentes e padrões de interface do Verasium.
             </p>
           </div>
 

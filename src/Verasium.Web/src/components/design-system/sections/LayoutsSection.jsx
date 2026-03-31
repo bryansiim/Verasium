@@ -9,7 +9,7 @@ export default function LayoutsSection() {
           <div className="ds-wire-topbar">Header 56px</div>
           <div className="ds-wire-body">
             <div className="ds-wire-logo">Logo</div>
-            <div className="ds-wire-title">Titulo Museo Moderno</div>
+            <div className="ds-wire-title">Título Museo Moderno</div>
             <div className="ds-wire-search">Campo de busca (max-width 600px)</div>
             <div className="ds-wire-chips">
               <span>Chip 1</span><span>Chip 2</span><span>Chip 3</span>
@@ -18,7 +18,7 @@ export default function LayoutsSection() {
         </div>
         <div className="ds-component-specs">
           <p>Fundo: Neutral-50 (light) / bg-page #0E0E1A (dark)</p>
-          <p>Logo centralizada no topo · Titulo em Museo Moderno · Input centralizado</p>
+          <p>Logo centralizada no topo · Título em Museo Moderno · Input centralizado</p>
         </div>
       </div>
 
@@ -44,35 +44,35 @@ export default function LayoutsSection() {
           </div>
         </div>
         <div className="ds-component-specs">
-          <p>Sidebar fixa 240px + area principal · Header 56px · Padding 24–32px</p>
+          <p>Sidebar fixa 240px + área principal · Header 56px · Padding 24–32px</p>
           <p>Grade de cards: 2–4 colunas desktop, 1 mobile</p>
         </div>
       </div>
 
       <div className="ds-subsection">
-        <h3 className="ds-subsection-title">Resultados / Verificacao</h3>
+        <h3 className="ds-subsection-title">Resultados / Verificação</h3>
         <div className="ds-wireframe">
           <div className="ds-wire-topbar">Header + Filtros</div>
           <div className="ds-wire-body">
             <div className="ds-wire-result-card">
               <span className="ds-wire-status">&#9679;</span>
               <div className="ds-wire-result-info">
-                <div>Titulo do resultado</div>
+                <div>Título do resultado</div>
                 <div className="ds-wire-bar" />
               </div>
             </div>
             <div className="ds-wire-result-card">
               <span className="ds-wire-status">&#9679;</span>
               <div className="ds-wire-result-info">
-                <div>Titulo do resultado</div>
+                <div>Título do resultado</div>
                 <div className="ds-wire-bar" />
               </div>
             </div>
           </div>
         </div>
         <div className="ds-component-specs">
-          <p>Card de resultado: icone de status · titulo · score de confianca · fonte · data</p>
-          <p>Barra de confianca com cor semantica · Expansivel para detalhes</p>
+          <p>Card de resultado: ícone de status · título · score de confiança · fonte · data</p>
+          <p>Barra de confiança com cor semântica · Expansível para detalhes</p>
         </div>
       </div>
     </section>

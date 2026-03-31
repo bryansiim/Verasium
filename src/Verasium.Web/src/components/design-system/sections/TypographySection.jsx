@@ -19,12 +19,12 @@ export default function TypographySection() {
         <div className="ds-font-specimens">
           <div className="ds-font-card">
             <span className="ds-font-name ds-museo">Museo Moderno</span>
-            <span className="ds-font-role">Display & Titulos (H1, Hero, Logotipo)</span>
+            <span className="ds-font-role">Display & Títulos (H1, Hero, Logotipo)</span>
             <p className="ds-font-sample ds-museo">
               Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz
             </p>
             <p className="ds-font-sample ds-museo">0 1 2 3 4 5 6 7 8 9</p>
-            <span className="ds-font-meta">Geometrica, arredondada, moderna — Peso: 600–700</span>
+            <span className="ds-font-meta">Geométrica, arredondada, moderna. Peso: 600–700</span>
           </div>
           <div className="ds-font-card">
             <span className="ds-font-name ds-jakarta">Plus Jakarta Sans</span>
@@ -33,7 +33,7 @@ export default function TypographySection() {
               Aa Bb Cc Dd Ee Ff Gg Hh Ii Jj Kk Ll Mm Nn Oo Pp Qq Rr Ss Tt Uu Vv Ww Xx Yy Zz
             </p>
             <p className="ds-font-sample ds-jakarta">0 1 2 3 4 5 6 7 8 9</p>
-            <span className="ds-font-meta">Sans-serif geometrica-humanista — Peso: 400–700</span>
+            <span className="ds-font-meta">Sans-serif geométrica-humanista. Peso: 400–700</span>
           </div>
         </div>
       </div>
@@ -58,9 +58,9 @@ export default function TypographySection() {
       <div className="ds-subsection">
         <h3 className="ds-subsection-title">Regras</h3>
         <ul className="ds-rules-list">
-          <li>Nunca misturar as duas fontes no mesmo nivel hierarquico</li>
-          <li>Museo Moderno apenas em H1/display — nunca em labels, botoes ou body</li>
-          <li>Peso minimo em texto corrido: 400. Nunca 300 ou lighter.</li>
+          <li>Nunca misturar as duas fontes no mesmo nível hierárquico</li>
+          <li>Museo Moderno apenas em H1/display, nunca em labels, botões ou body</li>
+          <li>Peso mínimo em texto corrido: 400. Nunca 300 ou lighter.</li>
         </ul>
       </div>
     </section>

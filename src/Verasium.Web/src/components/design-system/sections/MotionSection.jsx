@@ -1,14 +1,14 @@
 export default function MotionSection() {
   const timings = [
-    { name: "Ultra-rapido", duration: "100–120ms", use: "hover, toggle", demo: "0.11s" },
-    { name: "Rapido", duration: "150ms", use: "tooltip, badge", demo: "0.15s" },
-    { name: "Medio", duration: "220–280ms", use: "modal, drawer, transicao", demo: "0.25s" },
-    { name: "Lento", duration: "400–600ms", use: "loading, intro, animacao", demo: "0.5s" },
+    { name: "Ultra-rápido", duration: "100–120ms", use: "hover, toggle", demo: "0.11s" },
+    { name: "Rápido", duration: "150ms", use: "tooltip, badge", demo: "0.15s" },
+    { name: "Médio", duration: "220–280ms", use: "modal, drawer, transição", demo: "0.25s" },
+    { name: "Lento", duration: "400–600ms", use: "loading, intro, animação", demo: "0.5s" },
   ];
 
   const easings = [
     { name: "Entrada (ease-out)", value: "cubic-bezier(0.0, 0.0, 0.2, 1.0)" },
-    { name: "Saida (ease-in)", value: "cubic-bezier(0.4, 0.0, 1.0, 1.0)" },
+    { name: "Saída (ease-in)", value: "cubic-bezier(0.4, 0.0, 1.0, 1.0)" },
     { name: "Geral", value: "cubic-bezier(0.4, 0.0, 0.2, 1.0)" },
   ];
 
@@ -52,20 +52,20 @@ export default function MotionSection() {
       </div>
 
       <div className="ds-subsection">
-        <h3 className="ds-subsection-title">Microinteracoes</h3>
+        <h3 className="ds-subsection-title">Microinterações</h3>
         <ul className="ds-rules-list">
           <li><strong>Input focus:</strong> ring fade-in + scale(1.004) no container</li>
-          <li><strong>Botao press:</strong> scale(0.98)</li>
+          <li><strong>Botão press:</strong> scale(0.98)</li>
           <li><strong>Card hover:</strong> translateY(-2px) + shadow mais intensa (light)</li>
           <li><strong>Resultado entrada:</strong> fade-in + translateY(12px → 0)</li>
-          <li><strong>Score de confianca:</strong> barra preenche com ease-out</li>
-          <li><strong>Loading global:</strong> spark do icone pulsa suavemente (800ms loop)</li>
+          <li><strong>Score de confiança:</strong> barra preenche com ease-out</li>
+          <li><strong>Loading global:</strong> spark do ícone pulsa suavemente (800ms loop)</li>
         </ul>
       </div>
 
       <div className="ds-subsection">
         <h3 className="ds-subsection-title">Loading States</h3>
-        <p className="ds-body">Usar skeleton screens — nunca spinners isolados.</p>
+        <p className="ds-body">Usar skeleton screens, nunca spinners isolados.</p>
         <div className="ds-skeleton-demo">
           <div className="ds-skeleton ds-skeleton-circle" />
           <div className="ds-skeleton-lines">

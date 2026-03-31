@@ -20,8 +20,8 @@ const contentTypeLabels = {
   image: "Imagem",
   text: "Texto",
   pdf: "PDF",
-  video: "Video",
-  audio: "Audio",
+  video: "Vídeo",
+  audio: "Áudio",
 };
 
 function getConclusionStyle(conclusion) {
@@ -33,12 +33,6 @@ function getConclusionStyle(conclusion) {
     default:
       return { bg: "var(--amber-tint)", color: "var(--amber)", label: "Inconclusivo" };
   }
-}
-
-function getScoreColor(score) {
-  if (score <= 30) return "var(--green)";
-  if (score <= 60) return "var(--amber)";
-  return "var(--red)";
 }
 
 export default function ResultScreen({ result, onReset }) {
@@ -57,11 +51,11 @@ export default function ResultScreen({ result, onReset }) {
               </div>
               <div className="result-body">
                 <p className="error-message">
-                  {result.errorMessage || "Ocorreu um erro ao processar a analise. Por favor, tente novamente."}
+                  {result.errorMessage || "Ocorreu um erro ao processar a análise. Por favor, tente novamente."}
                 </p>
               </div>
             </div>
-            <button className="reset-btn" onClick={onReset}>Nova analise</button>
+            <button className="reset-btn" onClick={onReset}>Nova análise</button>
           </div>
         </div>
       </div>
@@ -69,7 +63,8 @@ export default function ResultScreen({ result, onReset }) {
   }
 
   const conclusionStyle = getConclusionStyle(result.conclusion);
-  const scoreColor = getScoreColor(result.confidenceScore);
+  const aiPercent = result.confidenceScore;
+  const humanPercent = 100 - aiPercent;
   const indicators = result.indicators || [];
 
   return (
@@ -79,7 +74,7 @@ export default function ResultScreen({ result, onReset }) {
           <div className="result-card success">
             <div className="result-header">
               <div className="result-status-icon">{"\u2713"}</div>
-              <h2>Resultado da Analise</h2>
+              <h2>Resultado da Análise</h2>
               {result.contentType && (
                 <span className="content-type-badge">
                   {contentTypeLabels[result.contentType] || result.contentType}
@@ -96,20 +91,35 @@ export default function ResultScreen({ result, onReset }) {
               </div>
 
               <div className="confidence-section">
-                <div className="confidence-label">
-                  <span>Probabilidade de ser IA</span>
-                  <span style={{ color: scoreColor, fontWeight: 700 }}>
-                    {result.confidenceScore}%
-                  </span>
+                <div className="spectrum-scores">
+                  <div className="score-block">
+                    <span className={`score-pct ${humanPercent >= 50 ? "human" : "neutral"}`}>
+                      {humanPercent}%
+                    </span>
+                    <span className="score-name">Humano</span>
+                  </div>
+                  <div className="score-block right">
+                    <span className={`score-pct ${aiPercent > 50 ? "ai" : "neutral"}`}>
+                      {aiPercent}%
+                    </span>
+                    <span className="score-name">IA</span>
+                  </div>
                 </div>
-                <div className="confidence-meter">
+
+                <div className="spectrum-track">
                   <div
-                    className="confidence-fill"
+                    className="spectrum-needle"
                     style={{
-                      width: `${result.confidenceScore}%`,
-                      background: scoreColor,
+                      left: `${100 - humanPercent}%`,
+                      border: `2.5px solid ${humanPercent > 60 ? "#1D9E75" : aiPercent > 60 ? "#E24B4A" : "#aaa"}`,
                     }}
                   />
+                </div>
+
+                <div className="spectrum-foot">
+                  <span>100% Humano</span>
+                  <span className="mid">50 / 50</span>
+                  <span>100% IA</span>
                 </div>
               </div>
 
@@ -160,7 +170,7 @@ export default function ResultScreen({ result, onReset }) {
             </div>
           </div>
 
-          <button className="reset-btn" onClick={onReset}>Nova analise</button>
+          <button className="reset-btn" onClick={onReset}>Nova análise</button>
         </div>
       </div>
     </div>

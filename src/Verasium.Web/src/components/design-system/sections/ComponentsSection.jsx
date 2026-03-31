@@ -15,24 +15,24 @@ export default function ComponentsSection() {
           <div className="ds-radius-item">
             <div className="ds-radius-box" style={{ borderRadius: "10px" }} />
             <span>10px</span>
-            <span className="ds-radius-use">Inputs, botoes, items de lista</span>
+            <span className="ds-radius-use">Inputs, botões, items de lista</span>
           </div>
           <div className="ds-radius-item">
             <div className="ds-radius-box" style={{ borderRadius: "14px" }} />
             <span>14px</span>
-            <span className="ds-radius-use">Cards, paineis, modais</span>
+            <span className="ds-radius-use">Cards, painéis, modais</span>
           </div>
           <div className="ds-radius-item">
             <div className="ds-radius-box" style={{ borderRadius: "9999px" }} />
             <span>9999px</span>
-            <span className="ds-radius-use">Avatar, icone circular</span>
+            <span className="ds-radius-use">Avatar, ícone circular</span>
           </div>
         </div>
       </div>
 
-      {/* Botoes */}
+      {/* Botões */}
       <div className="ds-subsection">
-        <h3 className="ds-subsection-title">Botoes</h3>
+        <h3 className="ds-subsection-title">Botões</h3>
         <div className="ds-component-group">
           <div className="ds-component-row">
             <button className="ds-btn ds-btn-primary ds-btn-sm">Small</button>
@@ -60,7 +60,7 @@ export default function ComponentsSection() {
         <div className="ds-component-group">
           <div className="ds-input-examples">
             <div className="ds-input-item">
-              <label className="ds-label">Input padrao</label>
+              <label className="ds-label">Input padrão</label>
               <input className="ds-input" type="text" placeholder="Placeholder text..." readOnly />
             </div>
             <div className="ds-input-item">
@@ -69,8 +69,8 @@ export default function ComponentsSection() {
             </div>
             <div className="ds-input-item">
               <label className="ds-label">Input com erro</label>
-              <input className="ds-input ds-input-error" type="text" defaultValue="Valor invalido" readOnly />
-              <span className="ds-input-error-text">Este campo e obrigatorio</span>
+              <input className="ds-input ds-input-error" type="text" defaultValue="Valor inválido" readOnly />
+              <span className="ds-input-error-text">Este campo é obrigatório</span>
             </div>
           </div>
           <div className="ds-component-specs">
@@ -86,8 +86,8 @@ export default function ComponentsSection() {
         <h3 className="ds-subsection-title">Cards</h3>
         <div className="ds-cards-showcase">
           <div className="ds-card-example">
-            <h4>Titulo do Card</h4>
-            <p>Conteudo do card com texto de exemplo. Background branco em light mode, bg-card em dark mode.</p>
+            <h4>Título do Card</h4>
+            <p>Conteúdo do card com texto de exemplo. Background branco em light mode, bg-card em dark mode.</p>
             <span className="ds-card-meta">Radius 14px · Padding 20–24px</span>
           </div>
         </div>
@@ -112,13 +112,13 @@ export default function ComponentsSection() {
         </div>
       </div>
 
-      {/* Icones */}
+      {/* Ícones */}
       <div className="ds-subsection">
-        <h3 className="ds-subsection-title">Icones</h3>
+        <h3 className="ds-subsection-title">Ícones</h3>
         <div className="ds-component-specs">
-          <p><strong>Biblioteca:</strong> Lucide Icons — manter consistencia, nao misturar sets</p>
+          <p><strong>Biblioteca:</strong> Lucide Icons, manter consistência, não misturar sets</p>
           <p><strong>Tamanho UI:</strong> 18px · <strong>Tamanho hero/feature:</strong> 20–24px</p>
-          <p><strong>Cor padrao:</strong> Neutral-400 (inativo) · Primary-500 (ativo)</p>
+          <p><strong>Cor padrão:</strong> Neutral-400 (inativo) · Primary-500 (ativo)</p>
         </div>
       </div>
     </section>

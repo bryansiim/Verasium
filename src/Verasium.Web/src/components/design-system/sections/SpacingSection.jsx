@@ -10,10 +10,10 @@ export default function SpacingSection() {
 
   return (
     <section className="ds-section" id="ds-spacing">
-      <h2 className="ds-section-title">04. Espacamento & Grid</h2>
+      <h2 className="ds-section-title">04. Espaçamento & Grid</h2>
 
       <div className="ds-subsection">
-        <h3 className="ds-subsection-title">Escala Base (multiplos de 4px)</h3>
+        <h3 className="ds-subsection-title">Escala Base (múltiplos de 4px)</h3>
         <div className="ds-spacing-scale">
           {scale.map((px) => (
             <div className="ds-spacing-row" key={px}>

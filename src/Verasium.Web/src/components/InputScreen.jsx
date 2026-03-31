@@ -14,7 +14,7 @@ const FORMAT_CARDS = [
       </svg>
     ),
     title: "Texto",
-    desc: "Artigos, redacoes, e-mails, posts",
+    desc: "Artigos, redações, e-mails, posts",
     formats: "TXT, DOC, DOCX",
   },
   {
@@ -26,7 +26,7 @@ const FORMAT_CARDS = [
       </svg>
     ),
     title: "Imagens",
-    desc: "Fotos, ilustracoes, arte digital",
+    desc: "Fotos, ilustrações, arte digital",
     formats: "JPG, PNG, WEBP, GIF, BMP",
   },
   {
@@ -39,8 +39,8 @@ const FORMAT_CARDS = [
       </svg>
     ),
     title: "PDFs",
-    desc: "Documentos, relatorios, artigos",
-    formats: "PDF (ate 20MB)",
+    desc: "Documentos, relatórios, artigos",
+    formats: "PDF (até 20MB)",
   },
   {
     icon: (
@@ -49,7 +49,7 @@ const FORMAT_CARDS = [
         <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
       </svg>
     ),
-    title: "Videos",
+    title: "Vídeos",
     desc: "Clips, deepfakes, gerados por IA",
     formats: "MP4, MOV, AVI, WEBM, MKV",
   },
@@ -61,8 +61,8 @@ const FORMAT_CARDS = [
         <circle cx="18" cy="16" r="3" />
       </svg>
     ),
-    title: "Audios",
-    desc: "Vozes sinteticas, musicas, podcasts",
+    title: "Áudios",
+    desc: "Vozes sintéticas, músicas, podcasts",
     formats: "MP3, WAV, AAC, OGG, FLAC",
   },
 ];
@@ -70,18 +70,18 @@ const FORMAT_CARDS = [
 const STEPS = [
   {
     number: "1",
-    title: "Envie o conteudo",
-    desc: "Cole um texto ou faca upload de qualquer arquivo suportado — imagem, PDF, video ou audio.",
+    title: "Envie o conteúdo",
+    desc: "Cole um texto ou faça upload de qualquer arquivo suportado: imagem, PDF, vídeo ou áudio.",
   },
   {
     number: "2",
     title: "IA analisa em profundidade",
-    desc: "Nosso motor de analise examina padroes linguisticos, visuais, sonoros e estruturais do conteudo.",
+    desc: "Nosso motor de análise examina padrões linguísticos, visuais, sonoros e estruturais do conteúdo.",
   },
   {
     number: "3",
     title: "Receba o veredito",
-    desc: "Obtenha uma conclusao clara com score de confianca e indicadores detalhados da analise.",
+    desc: "Obtenha uma conclusão clara com score de confiança e indicadores detalhados da análise.",
   },
 ];
 
@@ -163,12 +163,12 @@ export default function InputScreen({ onSubmit, onFileUpload }) {
         <div className="hero-grid">
           <div className="hero-content">
             <h1 className="hero-title">
-              Descubra se o conteudo e<br />
+              Descubra se o conteúdo é<br />
               <span className="hero-highlight">real ou gerado por IA</span>
             </h1>
             <p className="hero-subtitle">
-              Analise textos, imagens, PDFs, videos e audios com inteligencia artificial avancada.
-              Resultados detalhados com indicadores de confianca em segundos.
+              Analise textos, imagens, PDFs, vídeos e áudios com inteligência artificial avançada.
+              Resultados detalhados com indicadores de confiança em segundos.
             </p>
             <div className="hero-stats">
               <div className="hero-stat">
@@ -183,7 +183,7 @@ export default function InputScreen({ onSubmit, onFileUpload }) {
               <div className="hero-stat-divider" />
               <div className="hero-stat">
                 <span className="hero-stat-number">~30s</span>
-                <span className="hero-stat-label">Tempo medio</span>
+                <span className="hero-stat-label">Tempo médio</span>
               </div>
             </div>
           </div>
@@ -223,7 +223,7 @@ export default function InputScreen({ onSubmit, onFileUpload }) {
                     <>
                       {!content && (
                         <div className="input-placeholder">
-                          <span>Insira seu conteudo ou</span>
+                          <span>Insira seu conteúdo ou</span>
                           <button
                             type="button"
                             className="upload-link"
@@ -256,8 +256,8 @@ export default function InputScreen({ onSubmit, onFileUpload }) {
                   <span className="formats-label">Formatos suportados:</span>
                   <span className="format-tag">Texto</span>
                   <span className="format-tag">Imagem</span>
-                  <span className="format-tag">Audio</span>
-                  <span className="format-tag">Video</span>
+                  <span className="format-tag">Áudio</span>
+                  <span className="format-tag">Vídeo</span>
                   <span className="format-tag">PDF</span>
                 </div>
 
@@ -285,7 +285,7 @@ export default function InputScreen({ onSubmit, onFileUpload }) {
           <div className="section-header">
             <span className="section-tag">Como funciona</span>
             <h2 className="section-title">Simples e poderoso</h2>
-            <p className="section-desc">Tres passos para verificar a autenticidade de qualquer conteudo.</p>
+            <p className="section-desc">Três passos para verificar a autenticidade de qualquer conteúdo.</p>
           </div>
 
           <div className="steps-grid">
@@ -306,7 +306,7 @@ export default function InputScreen({ onSubmit, onFileUpload }) {
           <div className="section-header">
             <span className="section-tag">Formatos</span>
             <h2 className="section-title">Multi-formato</h2>
-            <p className="section-desc">Suporte completo para os principais tipos de midia digital.</p>
+            <p className="section-desc">Suporte completo para os principais tipos de mídia digital.</p>
           </div>
 
           <div className="formats-grid">
@@ -330,13 +330,13 @@ export default function InputScreen({ onSubmit, onFileUpload }) {
               <span className="section-tag">Sobre</span>
               <h2 className="section-title">Por que Verasium?</h2>
               <p className="about-paragraph">
-                Com o avanco acelerado da inteligencia artificial generativa, distinguir conteudo autentico
-                de conteudo sintetico tornou-se um dos maiores desafios da era digital.
+                Com o avanço acelerado da inteligência artificial generativa, distinguir conteúdo autêntico
+                de conteúdo sintético tornou-se um dos maiores desafios da era digital.
               </p>
               <p className="about-paragraph">
-                O Verasium utiliza o modelo <strong>Gemini</strong> do Google para analisar conteudo em multiplas
-                dimensoes — padroes linguisticos, consistencia visual, artefatos sonoros e estruturais — entregando
-                resultados transparentes com indicadores detalhados.
+                O Verasium analisa conteúdo em múltiplas dimensões: padrões linguísticos, consistência
+                visual, artefatos sonoros e estruturais, entregando resultados transparentes com indicadores
+                detalhados.
               </p>
               <div className="about-features">
                 <div className="about-feature">
@@ -344,21 +344,21 @@ export default function InputScreen({ onSubmit, onFileUpload }) {
                     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                     <polyline points="22 4 12 14.01 9 11.01" />
                   </svg>
-                  <span>Analise multi-modal (texto, imagem, video, audio, PDF)</span>
+                  <span>Análise multi-modal (texto, imagem, vídeo, áudio, PDF)</span>
                 </div>
                 <div className="about-feature">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                     <polyline points="22 4 12 14.01 9 11.01" />
                   </svg>
-                  <span>Indicadores detalhados com nivel de significancia</span>
+                  <span>Indicadores detalhados com nível de significância</span>
                 </div>
                 <div className="about-feature">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
                     <polyline points="22 4 12 14.01 9 11.01" />
                   </svg>
-                  <span>Score de confianca transparente de 0 a 100%</span>
+                  <span>Score de confiança transparente de 0 a 100%</span>
                 </div>
                 <div className="about-feature">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
