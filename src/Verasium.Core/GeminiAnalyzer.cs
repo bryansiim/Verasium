@@ -246,26 +246,22 @@ namespace Verasium.Core
             if (!a.IsSuccessful) return b;
             if (!b.IsSuccessful) return a;
 
-            int avgScore = (a.ConfidenceScore + b.ConfidenceScore) / 2;
-            string conclusion = avgScore >= 65 ? "AI-Generated"
-                              : avgScore <= 35 ? "Human-Made"
-                              : "Inconclusive";
-
             var allIndicators = new List<AnalysisIndicator>();
             allIndicators.AddRange(a.Indicators);
             allIndicators.AddRange(b.Indicators);
 
             string justification = $"{a.Justification ?? ""} {b.Justification ?? ""}".Trim();
 
-            return new AIAnalysisResult
+            var result = new AIAnalysisResult
             {
                 IsSuccessful = true,
-                Conclusion = conclusion,
-                ConfidenceScore = avgScore,
                 Justification = justification,
                 ContentType = contentType,
                 Indicators = allIndicators
             };
+
+            ComputeScoreAndConclusion(result);
+            return result;
         }
 
         //Analisa um video enviando-o diretamente ao Gemini
@@ -382,11 +378,38 @@ namespace Verasium.Core
             }
         }
 
-        //Garante que o conclusion é coerente com o confidenceScore
-        private static void NormalizeConclusion(AIAnalysisResult result)
+        //Calcula o score de IA (0-100) a partir dos indicadores
+        private static int ComputeScoreFromIndicators(List<AnalysisIndicator> indicators)
+        {
+            if (indicators == null || indicators.Count == 0) return 50;
+
+            var weights = new Dictionary<string, int>
+            {
+                { "strong_ai", 2 },
+                { "weak_ai", 1 },
+                { "neutral", 0 },
+                { "weak_human", -1 },
+                { "strong_human", -2 },
+            };
+
+            int sum = 0;
+            foreach (var ind in indicators)
+                sum += weights.GetValueOrDefault(ind.Significance, 0);
+
+            int n = indicators.Count;
+            int min = -2 * n;
+            int max = 2 * n;
+
+            double normalized = (double)(sum - min) / (max - min) * 100;
+            return Math.Clamp((int)Math.Round(normalized), 0, 100);
+        }
+
+        //Calcula score e conclusion a partir dos indicadores
+        private static void ComputeScoreAndConclusion(AIAnalysisResult result)
         {
             if (!result.IsSuccessful) return;
 
+            result.ConfidenceScore = ComputeScoreFromIndicators(result.Indicators);
             result.Conclusion = result.ConfidenceScore >= 65 ? "AI-Generated"
                               : result.ConfidenceScore <= 35 ? "Human-Made"
                               : "Inconclusive";
@@ -418,7 +441,7 @@ namespace Verasium.Core
                 if (parsed != null)
                 {
                     parsed.IsSuccessful = true;
-                    NormalizeConclusion(parsed);
+                    ComputeScoreAndConclusion(parsed);
                     return parsed;
                 }
             }
@@ -476,7 +499,7 @@ namespace Verasium.Core
             if (!string.IsNullOrEmpty(result.Conclusion))
             {
                 result.IsSuccessful = true;
-                NormalizeConclusion(result);
+                ComputeScoreAndConclusion(result);
                 return result;
             }
 

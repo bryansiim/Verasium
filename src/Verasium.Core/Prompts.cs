@@ -6,8 +6,6 @@ namespace Verasium.Core
 
 Responda APENAS com um objeto JSON valido, sem markdown fences, sem texto extra. Use exatamente este schema:
 {
-  ""conclusion"": ""AI-Generated"" | ""Human-Made"" | ""Inconclusive"",
-  ""confidenceScore"": <numero inteiro de 0 a 100, onde 100 = certeza absoluta de IA>,
   ""justification"": ""<explicacao de 2 a 4 frases em portugues>"",
   ""contentType"": ""image"" | ""text"" | ""pdf"" | ""video"" | ""audio"",
   ""indicators"": [
@@ -22,8 +20,7 @@ Responda APENAS com um objeto JSON valido, sem markdown fences, sem texto extra.
 REGRAS IMPORTANTES:
 - O campo ""indicators"" deve conter TODOS os criterios que voce avaliou, mesmo os neutros.
 - O campo ""significance"" indica a direcao do indicador: strong_ai = forte evidencia de IA, weak_ai = leve evidencia de IA, neutral = inconclusivo, weak_human = leve evidencia humana, strong_human = forte evidencia humana.
-- O ""confidenceScore"" deve refletir a soma ponderada de todos os indicadores. Nao se baseie em apenas um criterio.
-- O campo ""conclusion"" DEVE ser coerente com ""confidenceScore"": se score >= 65, conclusion = ""AI-Generated""; se score <= 35, conclusion = ""Human-Made""; se score entre 36 e 64, conclusion = ""Inconclusive"".
+- Avalie cada indicador de forma independente e honesta. O veredito final sera calculado automaticamente a partir dos indicadores.
 - Retorne SOMENTE o JSON. Nada antes, nada depois.";
 
         public const string ImageAnalysisSystemPrompt =
