@@ -2,6 +2,62 @@ import { useState, useRef } from "react";
 import logo from "../assets/logo.png";
 import Navbar from "./Navbar";
 
+const FILE_TYPE_MAP = {
+  jpg: "image", jpeg: "image", png: "image", gif: "image", webp: "image", bmp: "image", svg: "image",
+  pdf: "pdf",
+  mp4: "video", mov: "video", avi: "video", mkv: "video", webm: "video",
+  mp3: "audio", wav: "audio", ogg: "audio", flac: "audio", m4a: "audio",
+};
+
+const FILE_TYPE_STYLES = {
+  image: { bg: "#E8F0FE", color: "#1967D2", label: "Imagem" },
+  pdf:   { bg: "#FCE8E8", color: "#C5221F", label: "PDF" },
+  video: { bg: "#F3E8FD", color: "#7B1FA2", label: "Vídeo" },
+  audio: { bg: "#FEF7E0", color: "#E37400", label: "Áudio" },
+  file:  { bg: "#F1F3F4", color: "#5F6368", label: "Arquivo" },
+};
+
+const FILE_TYPE_ICONS = {
+  image: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+      <circle cx="8.5" cy="8.5" r="1.5" />
+      <polyline points="21 15 16 10 5 21" />
+    </svg>
+  ),
+  pdf: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+      <polyline points="14 2 14 8 20 8" />
+    </svg>
+  ),
+  video: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <polygon points="23 7 16 12 23 17 23 7" />
+      <rect x="1" y="5" width="15" height="14" rx="2" ry="2" />
+    </svg>
+  ),
+  audio: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M9 18V5l12-2v13" />
+      <circle cx="6" cy="18" r="3" />
+      <circle cx="18" cy="16" r="3" />
+    </svg>
+  ),
+  file: (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+      <polyline points="14 2 14 8 20 8" />
+    </svg>
+  ),
+};
+
+function getFileType(name) {
+  if (!name) return "file";
+  const ext = name.split(".").pop().toLowerCase();
+  return FILE_TYPE_MAP[ext] || "file";
+}
+
 const FORMAT_CARDS = [
   {
     icon: (
@@ -69,17 +125,34 @@ const FORMAT_CARDS = [
 
 const STEPS = [
   {
-    number: "1",
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+        <polyline points="17 8 12 3 7 8" />
+        <line x1="12" y1="3" x2="12" y2="15" />
+      </svg>
+    ),
     title: "Envie o conteúdo",
     desc: "Cole um texto ou faça upload de qualquer arquivo suportado: imagem, PDF, vídeo ou áudio.",
   },
   {
-    number: "2",
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="11" cy="11" r="8" />
+        <line x1="21" y1="21" x2="16.65" y2="16.65" />
+        <circle cx="11" cy="11" r="3" />
+      </svg>
+    ),
     title: "IA analisa em profundidade",
     desc: "Nosso motor de análise examina padrões linguísticos, visuais, sonoros e estruturais do conteúdo.",
   },
   {
-    number: "3",
+    icon: (
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+        <polyline points="22 4 12 14.01 9 11.01" />
+      </svg>
+    ),
     title: "Receba o veredito",
     desc: "Obtenha uma conclusão clara com score de confiança e indicadores detalhados da análise.",
   },
@@ -91,6 +164,8 @@ export default function InputScreen({ onSubmit, onFileUpload }) {
   const [dragging, setDragging] = useState(false);
   const fileInputRef = useRef(null);
   const selectedFileRef = useRef(null);
+  const fileType = getFileType(fileName);
+  const fileStyle = FILE_TYPE_STYLES[fileType];
   const handleSubmit = (e) => {
     e.preventDefault();
     if (selectedFileRef.current) {
@@ -207,17 +282,19 @@ export default function InputScreen({ onSubmit, onFileUpload }) {
                 <div className="input-area">
                   {fileName ? (
                     <div className="file-preview">
-                      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                        <polyline points="14 2 14 8 20 8" />
-                      </svg>
-                      <span className="file-name">{fileName}</span>
-                      <button type="button" className="file-remove" onClick={clearFile}>
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M18 6 6 18" />
-                          <path d="m6 6 12 12" />
-                        </svg>
-                      </button>
+                      <div className="file-card" style={{ backgroundColor: fileStyle.bg, color: fileStyle.color }}>
+                        <div className="file-card-icon">{FILE_TYPE_ICONS[fileType]}</div>
+                        <div className="file-card-info">
+                          <span className="file-card-name">{fileName}</span>
+                          <span className="file-card-type">{fileStyle.label}</span>
+                        </div>
+                        <button type="button" className="file-remove" onClick={clearFile}>
+                          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M18 6 6 18" />
+                            <path d="m6 6 12 12" />
+                          </svg>
+                        </button>
+                      </div>
                     </div>
                   ) : (
                     <>
@@ -290,8 +367,8 @@ export default function InputScreen({ onSubmit, onFileUpload }) {
 
           <div className="steps-grid">
             {STEPS.map((step) => (
-              <div key={step.number} className="step-card">
-                <div className="step-number">{step.number}</div>
+              <div key={step.title} className="step-card">
+                <div className="step-icon">{step.icon}</div>
                 <h3 className="step-title">{step.title}</h3>
                 <p className="step-desc">{step.desc}</p>
               </div>

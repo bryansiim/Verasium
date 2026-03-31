@@ -382,6 +382,16 @@ namespace Verasium.Core
             }
         }
 
+        //Garante que o conclusion é coerente com o confidenceScore
+        private static void NormalizeConclusion(AIAnalysisResult result)
+        {
+            if (!result.IsSuccessful) return;
+
+            result.Conclusion = result.ConfidenceScore >= 65 ? "AI-Generated"
+                              : result.ConfidenceScore <= 35 ? "Human-Made"
+                              : "Inconclusive";
+        }
+
         //Faz o parse do JSON retornado pelo Gemini em AIAnalysisResult
         private static AIAnalysisResult ParseGeminiJsonResponse(string rawResponse)
         {
@@ -408,6 +418,7 @@ namespace Verasium.Core
                 if (parsed != null)
                 {
                     parsed.IsSuccessful = true;
+                    NormalizeConclusion(parsed);
                     return parsed;
                 }
             }
@@ -465,6 +476,7 @@ namespace Verasium.Core
             if (!string.IsNullOrEmpty(result.Conclusion))
             {
                 result.IsSuccessful = true;
+                NormalizeConclusion(result);
                 return result;
             }
 

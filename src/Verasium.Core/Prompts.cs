@@ -23,6 +23,7 @@ REGRAS IMPORTANTES:
 - O campo ""indicators"" deve conter TODOS os criterios que voce avaliou, mesmo os neutros.
 - O campo ""significance"" indica a direcao do indicador: strong_ai = forte evidencia de IA, weak_ai = leve evidencia de IA, neutral = inconclusivo, weak_human = leve evidencia humana, strong_human = forte evidencia humana.
 - O ""confidenceScore"" deve refletir a soma ponderada de todos os indicadores. Nao se baseie em apenas um criterio.
+- O campo ""conclusion"" DEVE ser coerente com ""confidenceScore"": se score >= 65, conclusion = ""AI-Generated""; se score <= 35, conclusion = ""Human-Made""; se score entre 36 e 64, conclusion = ""Inconclusive"".
 - Retorne SOMENTE o JSON. Nada antes, nada depois.";
 
         public const string ImageAnalysisSystemPrompt =

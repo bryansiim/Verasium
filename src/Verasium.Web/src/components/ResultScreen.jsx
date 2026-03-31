@@ -65,7 +65,16 @@ export default function ResultScreen({ result, onReset }) {
   const conclusionStyle = getConclusionStyle(result.conclusion);
   const aiPercent = result.confidenceScore;
   const humanPercent = 100 - aiPercent;
-  const indicators = result.indicators || [];
+  const significanceWeight = {
+    strong_ai: 0,
+    strong_human: 1,
+    weak_ai: 2,
+    weak_human: 3,
+    neutral: 4,
+  };
+  const indicators = [...(result.indicators || [])].sort(
+    (a, b) => (significanceWeight[a.significance] ?? 4) - (significanceWeight[b.significance] ?? 4)
+  );
 
   return (
     <div className="screen-page">

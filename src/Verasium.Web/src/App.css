@@ -788,40 +788,67 @@ body {
 /* --- File preview --- */
 .file-preview {
   display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 24px 20px;
-  min-height: 200px;
-  color: var(--text-secondary);
+  align-items: flex-start;
+  padding: 20px 24px;
+  min-height: 260px;
 }
 
-.file-name {
-  font-size: 0.9rem;
+.file-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  border-radius: 12px;
+  max-width: 280px;
+  width: fit-content;
+}
+
+.file-card-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.file-card-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.file-card-name {
+  font-size: 0.82rem;
+  font-weight: 600;
   color: var(--text-primary);
-  flex: 1;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.file-card-type {
+  font-size: 0.7rem;
+  font-weight: 500;
 }
 
 .file-remove {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
-  border-radius: 8px;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
   border: none;
-  background: var(--gray-100);
-  color: var(--text-secondary);
+  background: rgba(0, 0, 0, 0.06);
+  color: inherit;
   cursor: pointer;
   transition: all 0.12s;
   flex-shrink: 0;
+  opacity: 0.6;
 }
 
 .file-remove:hover {
-  background: var(--gray-200);
-  color: var(--text-primary);
+  opacity: 1;
+  background: rgba(0, 0, 0, 0.1);
 }
 
 /* --- Submit button --- */
@@ -930,26 +957,18 @@ body {
   transform: translateY(-2px);
 }
 
-/* Phase 5B: last step card with accent */
-.step-card:last-child .step-number {
-  background: var(--accent-500);
-}
-
-.step-number {
+.step-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
-  border-radius: 10px;
-  font-size: var(--text-lg);
-  font-weight: 700;
-  color: var(--white);
-  background: var(--primary-500);
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
   margin-bottom: 20px;
-  font-family: var(--font-brand);
-  box-shadow: 0 4px 12px color-mix(in srgb, var(--primary-500) 25%, transparent);
+  background: #EEF0FB;
+  color: #4B50D6;
 }
+
 
 /* Phase 4A: MuseoModerno on step titles */
 .step-title {
