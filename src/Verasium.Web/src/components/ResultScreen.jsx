@@ -92,26 +92,21 @@ export default function ResultScreen({ result, onReset }) {
             </div>
 
             <div className="result-body">
-              <div
-                className="conclusion-badge"
-                style={{ background: conclusionStyle.bg, color: conclusionStyle.color }}
-              >
+              <h2 className="conclusion-title" style={{ color: conclusionStyle.color }}>
                 {conclusionStyle.label}
-              </div>
+              </h2>
 
               <div className="confidence-section">
                 <div className="spectrum-scores">
                   <div className="score-block">
-                    <span className={`score-pct ${humanPercent >= 50 ? "human" : "neutral"}`}>
+                    <span className="score-pct human">
                       {humanPercent}%
                     </span>
-                    <span className="score-name">Humano</span>
                   </div>
                   <div className="score-block right">
-                    <span className={`score-pct ${aiPercent > 50 ? "ai" : "neutral"}`}>
+                    <span className="score-pct ai">
                       {aiPercent}%
                     </span>
-                    <span className="score-name">IA</span>
                   </div>
                 </div>
 
@@ -126,9 +121,9 @@ export default function ResultScreen({ result, onReset }) {
                 </div>
 
                 <div className="spectrum-foot">
-                  <span>100% Humano</span>
+                  <span>Humano</span>
                   <span className="mid">50 / 50</span>
-                  <span>100% IA</span>
+                  <span>IA</span>
                 </div>
               </div>
 

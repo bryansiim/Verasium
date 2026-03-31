@@ -18,8 +18,8 @@ function App() {
       setScreen("result");
     } catch (err) {
       const msg = err.message === "Failed to fetch"
-        ? "Não foi possível conectar ao servidor. Verifique sua conexão."
-        : err.message;
+        ? "Não foi possível conectar ao servidor. Verifique sua conexão e tente novamente."
+        : err.message || "Estamos com um problema no momento. Por favor, tente novamente.";
       setResult({ isSuccessful: false, errorMessage: msg });
       setScreen("result");
     }
@@ -34,8 +34,8 @@ function App() {
       setScreen("result");
     } catch (err) {
       const msg = err.message === "Failed to fetch"
-        ? "Não foi possível conectar ao servidor. Verifique sua conexão."
-        : err.message;
+        ? "Não foi possível conectar ao servidor. Verifique sua conexão e tente novamente."
+        : err.message || "Estamos com um problema no momento. Por favor, tente novamente.";
       setResult({ isSuccessful: false, errorMessage: msg });
       setScreen("result");
     }
@@ -44,6 +44,7 @@ function App() {
   const handleReset = () => {
     setResult(null);
     setScreen("input");
+    window.scrollTo(0, 0);
   };
 
   return (

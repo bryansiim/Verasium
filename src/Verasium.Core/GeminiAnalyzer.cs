@@ -15,6 +15,41 @@ namespace Verasium.Core
             PropertyNameCaseInsensitive = true
         };
 
+        //Classifica a exceção e retorna uma mensagem amigável
+        private static string ClassifyError(Exception ex)
+        {
+            string msg = ex.Message?.ToLowerInvariant() ?? "";
+            string inner = ex.InnerException?.Message?.ToLowerInvariant() ?? "";
+            string full = msg + " " + inner;
+
+            // Rate limit / quota exceeded
+            if (full.Contains("429") || full.Contains("rate limit") || full.Contains("quota")
+                || full.Contains("resource exhausted") || full.Contains("too many requests"))
+                return "Estamos recebendo muitas solicitações no momento. Por favor, aguarde alguns instantes e tente novamente.";
+
+            // Conteúdo bloqueado por safety filters
+            if (full.Contains("safety") || full.Contains("blocked") || full.Contains("harm")
+                || full.Contains("recitation"))
+                return "O conteúdo enviado foi bloqueado pelos filtros de segurança. Tente com outro conteúdo.";
+
+            // Timeout
+            if (full.Contains("timeout") || full.Contains("deadline") || full.Contains("timed out"))
+                return "A análise demorou mais do que o esperado. Tente novamente ou envie um conteúdo menor.";
+
+            // Arquivo muito grande para a API
+            if (full.Contains("payload too large") || full.Contains("request entity too large")
+                || full.Contains("content too large") || full.Contains("too long"))
+                return "O conteúdo enviado é grande demais para ser processado. Tente com um arquivo menor.";
+
+            // API key / auth
+            if (full.Contains("401") || full.Contains("403") || full.Contains("api key")
+                || full.Contains("permission") || full.Contains("unauthorized"))
+                return "Estamos com um problema temporário no serviço. Tente novamente em alguns minutos.";
+
+            // Erro genérico
+            return "Estamos com um problema no momento. Por favor, tente novamente.";
+        }
+
         public GeminiAnalyzer()
         {
             //O cliente já le automaticamente a variavel GOOGLE_API_KEY setada no ambiente
@@ -73,7 +108,7 @@ namespace Verasium.Core
                 return new AIAnalysisResult
                 {
                     IsSuccessful = false,
-                    ErrorMessage = $"Erro na análise de imagem: {ex.Message}"
+                    ErrorMessage = ClassifyError(ex)
                 };
             }
         }
@@ -114,7 +149,7 @@ namespace Verasium.Core
                 return new AIAnalysisResult
                 {
                     IsSuccessful = false,
-                    ErrorMessage = $"Erro na análise de texto: {ex.Message}"
+                    ErrorMessage = ClassifyError(ex)
                 };
             }
         }
@@ -163,7 +198,7 @@ namespace Verasium.Core
                 return new AIAnalysisResult
                 {
                     IsSuccessful = false,
-                    ErrorMessage = $"Erro na analise de PDF: {ex.Message}"
+                    ErrorMessage = ClassifyError(ex)
                 };
             }
         }
@@ -204,7 +239,7 @@ namespace Verasium.Core
                 return new AIAnalysisResult
                 {
                     IsSuccessful = false,
-                    ErrorMessage = $"Erro na analise de texto do PDF: {ex.Message}"
+                    ErrorMessage = ClassifyError(ex)
                 };
             }
         }
@@ -316,7 +351,7 @@ namespace Verasium.Core
                 return new AIAnalysisResult
                 {
                     IsSuccessful = false,
-                    ErrorMessage = $"Erro na analise de video: {ex.Message}"
+                    ErrorMessage = ClassifyError(ex)
                 };
             }
         }
@@ -373,7 +408,7 @@ namespace Verasium.Core
                 return new AIAnalysisResult
                 {
                     IsSuccessful = false,
-                    ErrorMessage = $"Erro na analise de audio: {ex.Message}"
+                    ErrorMessage = ClassifyError(ex)
                 };
             }
         }

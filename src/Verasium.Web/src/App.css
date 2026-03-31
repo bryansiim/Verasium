@@ -965,10 +965,9 @@ body {
   height: 44px;
   border-radius: 12px;
   margin-bottom: 20px;
-  background: #EEF0FB;
-  color: #4B50D6;
+  background: #eef0fb;
+  color: #4b50d6;
 }
-
 
 /* Phase 4A: MuseoModerno on step titles */
 .step-title {
@@ -1289,7 +1288,7 @@ body {
 
 /* Magnifier handle */
 .magnifier::after {
-  content: '';
+  content: "";
   position: absolute;
   bottom: -15px;
   right: -5px;
@@ -1303,19 +1302,38 @@ body {
 
 /* Magnifier inner glow */
 .magnifier::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: 4px;
   border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%, rgba(74, 95, 212, 0.08), transparent 70%);
+  background: radial-gradient(
+    circle at 35% 35%,
+    rgba(74, 95, 212, 0.08),
+    transparent 70%
+  );
 }
 
 @keyframes moveMagnifier {
-  0%   { left: 18px;  top: 16px; }
-  30%  { left: 140px; top: 10px; }
-  60%  { left: 190px; top: 38px; }
-  80%  { left: 80px;  top: 46px; }
-  100% { left: 18px;  top: 16px; }
+  0% {
+    left: 18px;
+    top: 16px;
+  }
+  30% {
+    left: 140px;
+    top: 10px;
+  }
+  60% {
+    left: 190px;
+    top: 38px;
+  }
+  80% {
+    left: 80px;
+    top: 46px;
+  }
+  100% {
+    left: 18px;
+    top: 16px;
+  }
 }
 
 /* Label area */
@@ -1354,16 +1372,36 @@ body {
   opacity: 0;
 }
 
-.sub-item:nth-child(1) { animation-delay: 0s; }
-.sub-item:nth-child(2) { animation-delay: 2s; }
-.sub-item:nth-child(3) { animation-delay: 4s; }
+.sub-item:nth-child(1) {
+  animation-delay: 0s;
+}
+.sub-item:nth-child(2) {
+  animation-delay: 2s;
+}
+.sub-item:nth-child(3) {
+  animation-delay: 4s;
+}
 
 @keyframes cycleText {
-  0%   { opacity: 0; transform: translateY(6px); }
-  8%   { opacity: 1; transform: translateY(0); }
-  30%  { opacity: 1; transform: translateY(0); }
-  38%  { opacity: 0; transform: translateY(-6px); }
-  100% { opacity: 0; }
+  0% {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  8% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  38% {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 /* Bouncing colored dots */
@@ -1381,18 +1419,40 @@ body {
   animation: bounceDot 1.3s ease-in-out infinite;
 }
 
-.bouncing-dots span:nth-child(1) { background: #4A5FD4; animation-delay: 0s; }
-.bouncing-dots span:nth-child(2) { background: #8B6FD4; animation-delay: 0.18s; }
-.bouncing-dots span:nth-child(3) { background: #C084D4; animation-delay: 0.36s; }
+.bouncing-dots span:nth-child(1) {
+  background: #4a5fd4;
+  animation-delay: 0s;
+}
+.bouncing-dots span:nth-child(2) {
+  background: #8b6fd4;
+  animation-delay: 0.18s;
+}
+.bouncing-dots span:nth-child(3) {
+  background: #c084d4;
+  animation-delay: 0.36s;
+}
 
 @keyframes bounceDot {
-  0%, 100% { opacity: 0.3; transform: translateY(0); }
-  50%      { opacity: 1;   transform: translateY(-5px); }
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-5px);
+  }
 }
 
 @keyframes loadingFadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* ========================================================
@@ -1489,14 +1549,11 @@ body {
   color: var(--text-secondary);
 }
 
-/* Phase 4A: MuseoModerno on conclusion badge */
-.conclusion-badge {
-  display: inline-block;
+.result-card .conclusion-title {
   font-family: var(--font-brand);
-  font-size: 1.2rem;
+  font-size: 1.8rem;
   font-weight: 700;
-  padding: 12px 24px;
-  border-radius: 10px;
+  text-align: center;
   margin-bottom: 20px;
 }
 
@@ -1534,9 +1591,15 @@ body {
   transition: color 0.3s ease;
 }
 
-.score-pct.human { color: #1D9E75; }
-.score-pct.ai { color: #E24B4A; }
-.score-pct.neutral { color: var(--text-tertiary); }
+.score-pct.human {
+  color: #1d9e75;
+}
+.score-pct.ai {
+  color: #e24b4a;
+}
+.score-pct.neutral {
+  color: var(--text-tertiary);
+}
 
 .score-name {
   font-size: 0.7rem;
@@ -1550,12 +1613,13 @@ body {
   position: relative;
   height: 10px;
   border-radius: 5px;
-  background: linear-gradient(90deg,
-    #1D9E75 0%,
-    #9FE1CB 38%,
+  background: linear-gradient(
+    90deg,
+    #1d9e75 0%,
+    #9fe1cb 38%,
     #e8e8e8 50%,
-    #F7C1C1 62%,
-    #E24B4A 100%
+    #f7c1c1 62%,
+    #e24b4a 100%
   );
 }
 
@@ -1569,8 +1633,9 @@ body {
   background: white;
   border-radius: 50%;
   box-shadow: 0 1px 5px rgba(0, 0, 0, 0.18);
-  transition: left 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
-              border-color 0.4s ease;
+  transition:
+    left 0.6s cubic-bezier(0.34, 1.56, 0.64, 1),
+    border-color 0.4s ease;
 }
 
 /* Spectrum foot labels */
@@ -1581,14 +1646,16 @@ body {
 }
 
 .spectrum-foot span {
-  font-size: 0.6rem;
-  color: var(--text-tertiary);
-  opacity: 0.6;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
 }
 
 .spectrum-foot .mid {
   font-size: 0.6rem;
+  font-weight: 400;
   color: var(--text-tertiary);
+  opacity: 0.5;
 }
 
 /* Phase 7A: gradient left border on justification */
