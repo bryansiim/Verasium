@@ -1,42 +1,52 @@
 # Verasium – Software de Detecção de Conteúdo Gerado por IA  
 
-## Bryan José (2025) 
+## Bryan José (2025–2026) 
 
-O **Verasium** é um software desenvolvido em **C# (.NET 9)** para detecção de conteúdo sintético (gerado por Inteligência Artificial).  
-Ele identifica textos e imagens artificiais através da **leitura de metadados** e de **análises heurísticas** .  
+O **Verasium** é um software desenvolvido em **C# (.NET 9)** com frontend em **React** para detecção de conteúdo sintético (gerado por Inteligência Artificial).  
+Ele identifica textos, imagens, PDFs, vídeos e áudios artificiais através da **leitura de metadados**, **análise multimodal via Google Gemini** e **análises heurísticas**.  
 
 ---
 
 ## Status do Projeto  
 **Versão Beta – em desenvolvimento ativo.**  
-Esta é uma versão inicial, com funcionalidades principais já implementadas. Melhorias de desempenho, novas análises e interface gráfica serão adicionadas em versões futuras.  
+Funcionalidades principais já implementadas, incluindo API REST, interface web e suporte a múltiplos tipos de mídia.  
+
+---
+
+## Arquitetura  
+
+O projeto é organizado em três camadas:  
+
+- **Verasium.Api** — API REST em ASP.NET Core (backend)  
+- **Verasium.Core** — Lógica de análise e serviços compartilhados  
+- **Verasium.Web** — Interface web em React 19 + Vite  
 
 ---
 
 ## Funcionalidades Atuais  
+- Análise de **textos, imagens, PDFs, vídeos e áudios**  
 - Extração e leitura de metadados (EXIF, XMP, C2PA)  
-- Análise heurística para detecção de conteúdo gerado por IA  
-- Geração de score de confiança baseado em múltiplos parâmetros    
-
----
-
-## Próximas Atualizações  
-- Interface gráfica moderna (WPF)  
-- Análise visual direta de imagens, além dos metadados
-- Otimização de desempenho e redução de falsos positivos  
+- Análise multimodal via **Google Gemini 2.5 Flash**  
+- Extração de texto e imagens de PDFs  
+- API REST com upload de arquivos  
+- Interface web moderna com React  
+- Geração de score de confiança baseado em múltiplos indicadores  
+- Containerização com Docker  
 
 ---
 
 ## Tecnologias Utilizadas  
-- **Linguagem:** C#  
-- **Framework:** .NET 9  
-- **APIs:** Google.GenAI, MetadataExtractor  
+- **Linguagem:** C#, JavaScript  
+- **Backend:** ASP.NET Core (.NET 9)  
+- **Frontend:** React 19, Vite 7  
+- **IA:** Google Gemini 2.5 Flash (via Google.GenAI)  
+- **Infraestrutura:** Docker  
 
 ---
 
 ## Bibliotecas e APIs Externas  
 
-Este software pode utilizar as seguintes bibliotecas e APIs de terceiros:  
+Este software utiliza as seguintes bibliotecas e APIs de terceiros:  
 
 1. **Google.GenAI**  
    - Licença: Apache 2.0  
@@ -46,8 +56,18 @@ Este software pode utilizar as seguintes bibliotecas e APIs de terceiros:
    - Licença: Apache 2.0  
    - Copyright (c) Drew Noakes  
 
+3. **UglyToad.PdfPig**  
+   - Licença: Apache 2.0  
+   - Copyright (c) UglyToad  
+
 Esses serviços externos são utilizados apenas por meio de chamadas de API e **não são redistribuídos** com este software.  
 Seus respectivos termos e licenças permanecem válidos e independentes do código-fonte deste projeto, que está sob **GPLv3**.  
+
+---
+
+## Contribuição  
+O Verasium é um projeto **open source** e contribuições são bem-vindas!  
+Sinta-se à vontade para abrir **issues** para reportar bugs ou sugerir melhorias, e enviar **pull requests** com suas contribuições.  
 
 ---
 

@@ -1,5 +1,5 @@
 Verasium - AI-Generated Content Detection Software  
-Copyright (C) 2025  Bryan José Ribeiro Freitas  
+Copyright (C) 2025–2026  Bryan José Ribeiro Freitas  
 
 This program is free software: you can redistribute it and/or modify  
 it under the terms of the GNU General Public License as published by  
@@ -24,7 +24,11 @@ This software may utilize the following third-party APIs and libraries:
    - License: Apache 2.0
    - Copyright (c) Drew Noakes
 
-These external services are used via API calls only and are not redistributed with this software.  
+3. UglyToad.PdfPig
+   - License: Apache 2.0
+   - Copyright (c) UglyToad
+
+These external services and libraries are used via API calls or as NuGet packages and are not redistributed with this software.  
 Their respective licenses and terms apply.  
 This notice is provided for transparency and does not affect the GPLv3 licensing of this source code.
 --------------------------------------------------------------------------------
