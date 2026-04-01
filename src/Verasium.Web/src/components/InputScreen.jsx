@@ -263,6 +263,14 @@ export default function InputScreen({ onSubmit, onFileUpload }) {
             </div>
           </div>
 
+          <div className="mobile-formats">
+              <span className="format-tag">Texto</span>
+              <span className="format-tag">Imagem</span>
+              <span className="format-tag">Áudio</span>
+              <span className="format-tag">Vídeo</span>
+              <span className="format-tag">PDF</span>
+            </div>
+
           <div className="hero-input">
             <form onSubmit={handleSubmit} className="input-form">
               <div
