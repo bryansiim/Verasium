@@ -1879,7 +1879,7 @@ body {
 
   /* Hero centered on mobile */
   .hero {
-    padding: 50px 20px 32px;
+    padding: 50px 20px 120px;
     justify-content: space-between;
   }
 
@@ -2025,7 +2025,7 @@ body {
 
   /* Hero */
   .hero {
-    padding: 50px 16px 32px;
+    padding: 50px 16px 120px;
   }
 
   .hero-bg-glow::before { filter: blur(40px); }
