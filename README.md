@@ -1,12 +1,8 @@
 <p align="center">
-  <img src="src/assets/Verasium-logo.png" alt="Verasium Logo" width="500">
+  <img src="src/assets/Verasium-logo.png" alt="Verasium Logo" width="900">
 </p>
 
-<h3 align="center">Software de Detecção de Conteúdo Gerado por IA</h3>
-
-<p align="center">
-  <b>Bryan José (2025–2026)</b>
-</p>
+<h2 align="center">Software de Detecção de Conteúdo Gerado por IA</h2>
 
 O **Verasium** é um software desenvolvido em **C# (.NET 9)** com frontend em **React** para detecção de conteúdo sintético (gerado por Inteligência Artificial).  
 Ele identifica textos, imagens, PDFs, vídeos e áudios artificiais através da **leitura de metadados**, **análise multimodal via Google Gemini** e **análises heurísticas**.  
