@@ -1,6 +1,50 @@
 import logo from "../assets/logo.png";
 
-export default function LoadingScreen() {
+const LOADING_PHRASES = {
+  text: {
+    title: "Analisando texto",
+    subtitles: [
+      "Detectando padrões linguísticos",
+      "Verificando coerência semântica",
+      "Analisando estrutura textual",
+    ],
+  },
+  image: {
+    title: "Analisando imagem",
+    subtitles: [
+      "Detectando artefatos visuais",
+      "Verificando consistência de pixels",
+      "Analisando metadados da imagem",
+    ],
+  },
+  video: {
+    title: "Analisando vídeo",
+    subtitles: [
+      "Detectando inconsistências visuais",
+      "Verificando artefatos temporais",
+      "Analisando quadros-chave",
+    ],
+  },
+  audio: {
+    title: "Analisando áudio",
+    subtitles: [
+      "Detectando padrões de voz sintética",
+      "Verificando espectro de frequência",
+      "Analisando artefatos sonoros",
+    ],
+  },
+  pdf: {
+    title: "Analisando documento",
+    subtitles: [
+      "Detectando padrões linguísticos",
+      "Verificando estrutura do documento",
+      "Analisando metadados e formatação",
+    ],
+  },
+};
+
+export default function LoadingScreen({ contentType = "text" }) {
+  const phrases = LOADING_PHRASES[contentType] || LOADING_PHRASES.text;
   return (
     <div className="screen-page">
       <div className="screen-centered">
@@ -23,12 +67,12 @@ export default function LoadingScreen() {
 
           {/* Label + cycling subtitle + dots */}
           <div className="label-area">
-            <div className="loading-label">Analisando conteúdo</div>
+            <div className="loading-label">{phrases.title}</div>
 
             <div className="loading-sub">
-              <span className="sub-item">Detectando padrões linguísticos</span>
-              <span className="sub-item">Verificando coerência semântica</span>
-              <span className="sub-item">Analisando metadados</span>
+              {phrases.subtitles.map((text, i) => (
+                <span key={i} className="sub-item">{text}</span>
+              ))}
             </div>
 
             <div className="bouncing-dots">

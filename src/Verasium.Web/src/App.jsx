@@ -5,11 +5,26 @@ import ResultScreen from "./components/ResultScreen";
 import { analyzeContent, analyzeFile } from "./services/api";
 import "./App.css";
 
+const FILE_TYPE_MAP = {
+  jpg: "image", jpeg: "image", png: "image", gif: "image", webp: "image", bmp: "image", svg: "image",
+  pdf: "pdf",
+  mp4: "video", mov: "video", avi: "video", mkv: "video", webm: "video",
+  mp3: "audio", wav: "audio", ogg: "audio", flac: "audio", m4a: "audio",
+};
+
+function getFileType(name) {
+  if (!name) return "text";
+  const ext = name.split(".").pop().toLowerCase();
+  return FILE_TYPE_MAP[ext] || "text";
+}
+
 function App() {
   const [screen, setScreen] = useState("input");
   const [result, setResult] = useState(null);
+  const [contentType, setContentType] = useState("text");
 
   const handleSubmit = async (content) => {
+    setContentType("text");
     setScreen("loading");
 
     try {
@@ -26,6 +41,7 @@ function App() {
   };
 
   const handleFileUpload = async (file) => {
+    setContentType(getFileType(file.name));
     setScreen("loading");
 
     try {
@@ -55,7 +71,7 @@ function App() {
           onFileUpload={handleFileUpload}
         />
       )}
-{screen === "loading" && <LoadingScreen />}
+{screen === "loading" && <LoadingScreen contentType={contentType} />}
       {screen === "result" && (
         <ResultScreen result={result} onReset={handleReset} />
       )}
