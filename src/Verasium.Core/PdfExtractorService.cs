@@ -15,6 +15,14 @@ namespace Verasium.Core
                 using var document = PdfDocument.Open(filePath);
                 result.PageCount = document.NumberOfPages;
 
+                // Extract PDF document metadata
+                if (document.Information != null)
+                {
+                    result.Producer = document.Information.Producer ?? "";
+                    result.Creator = document.Information.Creator ?? "";
+                    result.Author = document.Information.Author ?? "";
+                }
+
                 var textBuilder = new StringBuilder();
 
                 foreach (var page in document.GetPages())

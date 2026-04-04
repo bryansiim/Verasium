@@ -5,6 +5,9 @@ namespace Verasium.Core
         public string ExtractedText { get; set; } = "";
         public List<PdfImage> Images { get; set; } = new();
         public int PageCount { get; set; }
+        public string Producer { get; set; } = "";
+        public string Creator { get; set; } = "";
+        public string Author { get; set; } = "";
     }
 
     public class PdfImage

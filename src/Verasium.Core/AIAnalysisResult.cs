@@ -22,5 +22,8 @@ namespace Verasium.Core
 
         [JsonPropertyName("indicators")]
         public List<AnalysisIndicator> Indicators { get; set; } = new();
+
+        [JsonPropertyName("lowConfidence")]
+        public bool LowConfidence { get; set; }
     }
 }

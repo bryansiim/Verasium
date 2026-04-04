@@ -217,6 +217,24 @@ export default function InputScreen({ onSubmit, onFileUpload }) {
     setDragging(false);
   };
 
+  const handlePaste = (e) => {
+    const items = e.clipboardData?.items;
+    if (!items) return;
+
+    for (const item of items) {
+      if (item.kind === "file") {
+        e.preventDefault();
+        const file = item.getAsFile();
+        if (file) {
+          selectedFileRef.current = file;
+          setFileName(file.name);
+          setContent("");
+        }
+        return;
+      }
+    }
+  };
+
   const hasContent = content.trim() || fileName;
 
   return (
@@ -278,6 +296,7 @@ export default function InputScreen({ onSubmit, onFileUpload }) {
                 onDrop={handleDrop}
                 onDragOver={handleDragOver}
                 onDragLeave={handleDragLeave}
+                onPaste={handlePaste}
               >
                 <input
                   ref={fileInputRef}

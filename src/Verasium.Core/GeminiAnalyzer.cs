@@ -92,7 +92,7 @@ namespace Verasium.Core
                 };
 
                 var response = await client.Models.GenerateContentAsync(
-                    model: "gemini-2.5-flash",
+                    model: "gemini-3-flash",
                     contents: content,
                     config: config
                 );
@@ -133,7 +133,7 @@ namespace Verasium.Core
                 };
 
                 var response = await client.Models.GenerateContentAsync(
-                    model: "gemini-2.5-flash",
+                    model: "gemini-3-flash",
                     contents: textContent,
                     config: config
                 );
@@ -165,7 +165,7 @@ namespace Verasium.Core
                 // Se tem so texto, analisa como texto com prompt de PDF
                 if (hasText && !hasImages)
                 {
-                    return await AnalyzePdfTextAsync(pdfContent.ExtractedText);
+                    return await AnalyzePdfTextAsync(pdfContent);
                 }
 
                 // Se tem so imagens, analisa cada imagem e agrega
@@ -177,7 +177,7 @@ namespace Verasium.Core
                 // Se tem ambos, analisa texto e imagens separadamente e agrega
                 if (hasText && hasImages)
                 {
-                    var textTask = AnalyzePdfTextAsync(pdfContent.ExtractedText);
+                    var textTask = AnalyzePdfTextAsync(pdfContent);
                     var imageTask = AnalyzePdfImagesAsync(pdfContent.Images);
                     await Task.WhenAll(textTask, imageTask);
 
@@ -203,11 +203,23 @@ namespace Verasium.Core
             }
         }
 
-        //Analisa o texto extraido de um PDF
-        private async Task<AIAnalysisResult> AnalyzePdfTextAsync(string text)
+        //Analisa o texto extraido de um PDF incluindo metadados do documento
+        private async Task<AIAnalysisResult> AnalyzePdfTextAsync(PdfContent pdfContent)
         {
             try
             {
+                string contentWithMetadata = pdfContent.ExtractedText;
+
+                // Prepend PDF metadata if available
+                bool hasMetadata = !string.IsNullOrEmpty(pdfContent.Producer)
+                    || !string.IsNullOrEmpty(pdfContent.Creator)
+                    || !string.IsNullOrEmpty(pdfContent.Author);
+
+                if (hasMetadata)
+                {
+                    contentWithMetadata = $"== METADADOS DO PDF ==\nProducer: {(string.IsNullOrEmpty(pdfContent.Producer) ? "[Ausente]" : pdfContent.Producer)}\nCreator: {(string.IsNullOrEmpty(pdfContent.Creator) ? "[Ausente]" : pdfContent.Creator)}\nAuthor: {(string.IsNullOrEmpty(pdfContent.Author) ? "[Ausente]" : pdfContent.Author)}\n\n== TEXTO EXTRAIDO ==\n{pdfContent.ExtractedText}";
+                }
+
                 var config = new GenerateContentConfig
                 {
                     SystemInstruction = new Content
@@ -223,8 +235,8 @@ namespace Verasium.Core
                 };
 
                 var response = await client.Models.GenerateContentAsync(
-                    model: "gemini-2.5-flash",
-                    contents: text,
+                    model: "gemini-3-flash",
+                    contents: contentWithMetadata,
                     config: config
                 );
 
@@ -295,12 +307,12 @@ namespace Verasium.Core
                 Indicators = allIndicators
             };
 
-            ComputeScoreAndConclusion(result);
+            ScoringEngine.ComputeScoreAndConclusion(result);
             return result;
         }
 
-        //Analisa um video enviando-o diretamente ao Gemini
-        public async Task<AIAnalysisResult> AnalyzeVideoAsync(byte[] videoBytes, string mimeType)
+        //Analisa um video enviando-o ao Gemini junto com metadados
+        public async Task<AIAnalysisResult> AnalyzeVideoAsync(string metadataSummary, byte[] videoBytes, string mimeType)
         {
             try
             {
@@ -322,7 +334,7 @@ namespace Verasium.Core
                 {
                     Parts = new List<Part>
                     {
-                        new Part { Text = "Analise este video e determine se foi gerado por inteligencia artificial." },
+                        new Part { Text = $"{metadataSummary}\n\nAnalise este video e determine se foi gerado por inteligencia artificial." },
                         new Part
                         {
                             InlineData = new Blob
@@ -335,7 +347,7 @@ namespace Verasium.Core
                 };
 
                 var response = await client.Models.GenerateContentAsync(
-                    model: "gemini-2.5-flash",
+                    model: "gemini-3-flash",
                     contents: content,
                     config: config
                 );
@@ -356,8 +368,8 @@ namespace Verasium.Core
             }
         }
 
-        //Analisa um audio enviando-o diretamente ao Gemini
-        public async Task<AIAnalysisResult> AnalyzeAudioAsync(byte[] audioBytes, string mimeType)
+        //Analisa um audio enviando-o ao Gemini junto com metadados
+        public async Task<AIAnalysisResult> AnalyzeAudioAsync(string metadataSummary, byte[] audioBytes, string mimeType)
         {
             try
             {
@@ -379,7 +391,7 @@ namespace Verasium.Core
                 {
                     Parts = new List<Part>
                     {
-                        new Part { Text = "Analise este audio e determine se foi gerado por inteligencia artificial." },
+                        new Part { Text = $"{metadataSummary}\n\nAnalise este audio e determine se foi gerado por inteligencia artificial." },
                         new Part
                         {
                             InlineData = new Blob
@@ -392,7 +404,7 @@ namespace Verasium.Core
                 };
 
                 var response = await client.Models.GenerateContentAsync(
-                    model: "gemini-2.5-flash",
+                    model: "gemini-3-flash",
                     contents: content,
                     config: config
                 );
@@ -413,41 +425,61 @@ namespace Verasium.Core
             }
         }
 
-        //Calcula o score de IA (0-100) a partir dos indicadores
-        private static int ComputeScoreFromIndicators(List<AnalysisIndicator> indicators)
-        {
-            if (indicators == null || indicators.Count == 0) return 50;
 
-            var weights = new Dictionary<string, int>
+        //Faz uma revisao critica de um resultado inconclusivo
+        public async Task<AIAnalysisResult> CriticalReviewAsync(AIAnalysisResult firstPass, string contentType)
+        {
+            try
             {
-                { "strong_ai", 2 },
-                { "weak_ai", 1 },
-                { "neutral", 0 },
-                { "weak_human", -1 },
-                { "strong_human", -2 },
-            };
+                var indicatorsSummary = string.Join("\n", firstPass.Indicators.Select(i =>
+                    $"- {i.Name}: {i.Finding} [{i.Significance}]"));
 
-            int sum = 0;
-            foreach (var ind in indicators)
-                sum += weights.GetValueOrDefault(ind.Significance, 0);
+                string reviewContent = $@"== RESULTADO DA PRIMEIRA ANALISE ==
+Tipo de conteudo: {contentType}
+Conclusao: {firstPass.Conclusion}
+Score: {firstPass.ConfidenceScore}
+Justificativa: {firstPass.Justification}
 
-            int n = indicators.Count;
-            int min = -2 * n;
-            int max = 2 * n;
+== INDICADORES ENCONTRADOS ==
+{indicatorsSummary}
 
-            double normalized = (double)(sum - min) / (max - min) * 100;
-            return Math.Clamp((int)Math.Round(normalized), 0, 100);
-        }
+== SUA TAREFA ==
+Revise criticamente cada indicador acima e faca uma nova analise completa. Considere se indicadores foram classificados corretamente e se ha sinais que foram ignorados.";
 
-        //Calcula score e conclusion a partir dos indicadores
-        private static void ComputeScoreAndConclusion(AIAnalysisResult result)
-        {
-            if (!result.IsSuccessful) return;
+                var config = new GenerateContentConfig
+                {
+                    SystemInstruction = new Content
+                    {
+                        Parts = new List<Part>
+                        {
+                            new Part { Text = Prompts.CriticalReviewSystemPrompt }
+                        }
+                    },
+                    Temperature = 0.2,
+                    MaxOutputTokens = 8192,
+                    ResponseMimeType = "application/json"
+                };
 
-            result.ConfidenceScore = ComputeScoreFromIndicators(result.Indicators);
-            result.Conclusion = result.ConfidenceScore >= 65 ? "AI-Generated"
-                              : result.ConfidenceScore <= 35 ? "Human-Made"
-                              : "Inconclusive";
+                var response = await client.Models.GenerateContentAsync(
+                    model: "gemini-3-flash",
+                    contents: reviewContent,
+                    config: config
+                );
+
+                string rawResponse = response?.Candidates?.FirstOrDefault()
+                    ?.Content?.Parts?.FirstOrDefault()?.Text
+                    ?? "";
+
+                return ParseGeminiJsonResponse(rawResponse);
+            }
+            catch (Exception ex)
+            {
+                return new AIAnalysisResult
+                {
+                    IsSuccessful = false,
+                    ErrorMessage = ClassifyError(ex)
+                };
+            }
         }
 
         //Faz o parse do JSON retornado pelo Gemini em AIAnalysisResult
@@ -476,7 +508,7 @@ namespace Verasium.Core
                 if (parsed != null)
                 {
                     parsed.IsSuccessful = true;
-                    ComputeScoreAndConclusion(parsed);
+                    ScoringEngine.ComputeScoreAndConclusion(parsed);
                     return parsed;
                 }
             }
@@ -534,7 +566,7 @@ namespace Verasium.Core
             if (!string.IsNullOrEmpty(result.Conclusion))
             {
                 result.IsSuccessful = true;
-                ComputeScoreAndConclusion(result);
+                ScoringEngine.ComputeScoreAndConclusion(result);
                 return result;
             }
 
