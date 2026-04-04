@@ -29,7 +29,7 @@ O projeto é organizado em três camadas:
 ## Funcionalidades Atuais  
 - Análise de **textos, imagens, PDFs, vídeos e áudios**  
 - Extração e leitura de metadados (EXIF, XMP, C2PA)  
-- Análise multimodal via **Google Gemini 3 Flash**  
+- Análise multimodal via **Google Gemini 3 Flash Preview**  
 - Extração de texto e imagens de PDFs  
 - API REST com upload de arquivos  
 - Interface web moderna com React  
@@ -42,7 +42,7 @@ O projeto é organizado em três camadas:
 - **Linguagem:** C#, JavaScript  
 - **Backend:** ASP.NET Core (.NET 9)  
 - **Frontend:** React 19, Vite 7  
-- **IA:** Google Gemini 3 Flash (via Google.GenAI)  
+- **IA:** Google Gemini 3 Flash Preview (via Google.GenAI)  
 - **Infraestrutura:** Docker  
 
 ---
