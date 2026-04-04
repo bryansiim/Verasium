@@ -46,8 +46,9 @@ namespace Verasium.Core
                 || full.Contains("permission") || full.Contains("unauthorized"))
                 return "Estamos com um problema temporário no serviço. Tente novamente em alguns minutos.";
 
-            // Erro genérico - inclui mensagem real para diagnóstico
-            return $"Erro inesperado: {ex.Message}";
+            // Erro genérico
+            Console.Error.WriteLine($"[Verasium] Erro nao classificado: {ex}");
+            return "Estamos com um problema no momento. Por favor, tente novamente.";
         }
 
         public GeminiAnalyzer()
