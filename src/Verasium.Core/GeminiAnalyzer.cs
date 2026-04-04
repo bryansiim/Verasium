@@ -92,7 +92,7 @@ namespace Verasium.Core
                 };
 
                 var response = await client.Models.GenerateContentAsync(
-                    model: "gemini-3-flash",
+                    model: "gemini-2.5-flash",
                     contents: content,
                     config: config
                 );
@@ -133,7 +133,7 @@ namespace Verasium.Core
                 };
 
                 var response = await client.Models.GenerateContentAsync(
-                    model: "gemini-3-flash",
+                    model: "gemini-2.5-flash",
                     contents: textContent,
                     config: config
                 );
@@ -235,7 +235,7 @@ namespace Verasium.Core
                 };
 
                 var response = await client.Models.GenerateContentAsync(
-                    model: "gemini-3-flash",
+                    model: "gemini-2.5-flash",
                     contents: contentWithMetadata,
                     config: config
                 );
@@ -347,7 +347,7 @@ namespace Verasium.Core
                 };
 
                 var response = await client.Models.GenerateContentAsync(
-                    model: "gemini-3-flash",
+                    model: "gemini-2.5-flash",
                     contents: content,
                     config: config
                 );
@@ -404,7 +404,7 @@ namespace Verasium.Core
                 };
 
                 var response = await client.Models.GenerateContentAsync(
-                    model: "gemini-3-flash",
+                    model: "gemini-2.5-flash",
                     contents: content,
                     config: config
                 );
@@ -461,7 +461,7 @@ Revise criticamente cada indicador acima e faca uma nova analise completa. Consi
                 };
 
                 var response = await client.Models.GenerateContentAsync(
-                    model: "gemini-3-flash",
+                    model: "gemini-2.5-flash",
                     contents: reviewContent,
                     config: config
                 );
